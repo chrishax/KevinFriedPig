@@ -1,0 +1,19 @@
+  <resources> 
+      <color name="garnett1">#B22222</color>
+      <color name="garnett2">#330000</color>
+      
+      <color name="gold1">#FFFF00</color>
+      <color name="gold2">#FFA500</color>
+      <color name="gold3">#FFCC00</color>  
+      
+      <color name="gray1">#DCDCDC</color>
+      <color name="gray2">#808080</color>
+      <color name="gray3">#696969</color>
+      
+      <color name="lightBlue1">#E0FFFF</color>
+      <color name="lightBlue2">#B0E0E6</color>
+
+      <color name="black">#000000</color>
+      
+      
+  </resources>
