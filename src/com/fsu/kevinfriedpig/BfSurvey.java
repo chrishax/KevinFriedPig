@@ -1,9 +1,8 @@
 package com.fsu.kevinfriedpig;
 
 import java.util.Deque;
+import java.util.ListIterator;
 import java.util.Vector;
-
-import android.R.bool;
 
 public class BfSurvey {
 
@@ -20,40 +19,45 @@ public class BfSurvey {
   
   
   
-  public BfSurvey ( const ALUGraph& g)
+  public BfSurvey ( ALUGraph g)
   // constructor requiring a graph to be passed... init all variables
   {
-	  distance(g.VrtxSize(), g.VrtxSize());
-	  parent(g.VrtxSize(), g.VrtxSize() + 1);
-	  color(g.VrtxSize(), 'w');
-	  dtime(g.VrtxSize(), g.VrtxSize());
+	  //distance(g.VrtxSize(), g.VrtxSize());
+	  distance.setSize(g.VrtxSize());
+	  SetAll(distance, g.VrtxSize());
+	  parent.setSize(g.VrtxSize());
+	  SetAll(parent, g.VrtxSize());
+	  color.setSize(g.VrtxSize());
+	  SetAll(color, 'w');
+	  dtime.setSize(g.VrtxSize());
+	  SetAll(dtime, g.VrtxSize());
 	  traceQue = false;
-	  g_(g);
-	  visited_(g.VrtxSize(), false);
+	  //graph copy
+	  g_ = g;
+	  visited_.setSize(g.VrtxSize());
+	  SetAll(visited_, false);
 	  
   }
   
   
-	  void search( Integer v )
+  void Search( int v )
+  {
+	  Integer dt = 0;
+	  conQ_.addLast(v);
+	  visited_.set(v, true);
+	  distance.set( v, 0 );
+	  color.set(v,'g'); // grey for currently in queue
+	  dtime.set(v,dt);
+	  ++dt;
+	  while (!conQ_.isEmpty())
 	  {
-	    Integer dt = 0;
-	    conQ_.addLast(v);
-	    visited_.set(v, true);
-	    distance.set( v, 0 );
-	    color.set(v,'g'); // grey for currently in queue
-	    dtime.set(v,dt);
-	    ++dt;
-	    int cnt = 0; // counts the deepness in the iterator
-	    
-	    while (!conQ_.isEmpty())
-	    {
-	      int n;
+		  int n = 0;
 	      int f = conQ_.peekFirst();
 	      
-	      typename ALUGraph<Vertex>::AdjIterator adjacents = g_.Begin(f);
-	      while ( adjacents != g_.End(f) )
+	      ListIterator<Integer> adjacents = g_.Begin(f);
+	      while ( adjacents.hasNext() )
 	      {
-	        n = *adjacents;
+	        n = adjacents.next();
 	        if( visited_.get(v) == false )
 	        {
 	          conQ_.addLast(n); // PushFIFO
@@ -64,7 +68,7 @@ public class BfSurvey {
 	          dtime.set(n, dt);
 	          ++dt;
 	        }
-	        ++adjacents;
+	        
 	      } // end while (adjacents != g_.End(f) )
 	      if( adjacents == g_.End(f) && visited_.get(n) == false )
 	      {
@@ -80,20 +84,18 @@ public class BfSurvey {
 	      {
 	        conQ_.removeFirst();
 	        color.set(f,'b'); // black for removed queue
-	        cnt = 0;
 	      } // end else
 	    }
 	  }
 	  
 	  
-	  
-	  
 	  void Search()
 	  {
 	    Reset();
-	    for (Integer v = 0; v < g_.VrtxSize(); ++v )
+	    for (int v = 0; v < g_.VrtxSize(); ++v )
 	    {
-	      if (color.get(v) == 'w') Search(v); // white for never been in queue
+	      if (color.get(v) == 'w') 
+	    	  Search(v); // white for never been in queue
 	    }
 	  }
 	  
@@ -102,7 +104,7 @@ public class BfSurvey {
 	  {
 	    for (Integer v = 0; v < g_.VrtxSize(); ++v )
 	    {
-	      visited_.set(v,0); //
+	      visited_.set(v,false); //
 	      distance.set(v, g_.VrtxSize()); // 1 over the vrtx size
 	      parent.set(v, g_.VrtxSize()) ; // 1 over the distance
 	      color.set(v, 'w'); // no vertex has been in queue
@@ -155,5 +157,24 @@ public class BfSurvey {
 	  {
 	    return g_.VrtxSize();
 	  }
+	  
+	  void SetAll (Vector<Integer> v, int e)
+	  {
+		  for(int i = 0; i < v.size(); ++i)
+			  v.set(i, e);
+	  }
+	  
+	  void SetAll (Vector<Character> v, char e)
+	  {
+		  for(int i = 0; i < v.size(); ++i)
+			  v.set(i, e);
+	  }
+	  
+	  void SetAll (Vector<Boolean> v, boolean e)
+	  {
+		  for(int i = 0; i < v.size(); ++i)
+			  v.set(i, e);
+	  }
+
   }
  

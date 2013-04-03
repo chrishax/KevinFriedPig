@@ -1,6 +1,8 @@
 package com.fsu.kevinfriedpig;
 
+import java.util.ListIterator;
 import java.util.Vector;
+import java.util.Hashtable;
 
 public class SymGraph {
 
@@ -34,106 +36,100 @@ public class SymGraph {
 //		N GetNumber ( S s ) { return s2n_[s]; }
 //		//private: // changed for the purposes of this
 
-		ALUGraph<N>      g_;
-		HashTable<Integer,N,HashType> s2n_;
-		Vector<Integer>        n2s_;
+		ALUGraph	    	  g_;
+		Hashtable<String, Integer> s2n_;
+		Vector<String>        n2s_;
 		Integer  lastPushed;
 	    
-	    };
 	  
 	    SymGraph ( )
 		// default constructor
 	    {
-	    	s2n_(100);
-	    	lastPushed(0);
+	    	lastPushed = 0;
 	    }
-	  
-		template < typename S , typename N>
-		    SymbolGraph<S,N>::SymbolGraph ( N n ): g_( n ), s2n_( n ), n2s_( n ), lastPushed(0)
-		    // constructor that initializes the size of the graph and underlying conversions
+
+	    SymGraph ( int n )
+	    // constructor that initializes the size of the graph and underlying conversions
 		{
-	    
+	    	g_.SetVrtxSize(n);
+	    	//s2n_ -> n
+	    	n2s_.setSize(n);
+	    	lastPushed = 0;
 		}
 	  
+	    void SetVrtxSize  (int n)
+	    // Sets the vertex size of the graph
+	    {
+	    	g_.SetVrtxSize( n );
+	    }
 	  
-		    template < typename S , typename N>
-			void   SymbolGraph<S,N>::SetVrtxSize  (N n)
-			// Sets the vertex size of the graph
-		    {
-			g_.SetVrtxSize( n );
-		    }
+	    void AddEdge (String from, String to)
+	    // adds an edge between to vertecies of the graph
+	    {
+	    	g_.AddEdge(s2n_.get(from), s2n_.get(to));
+	    }
 	  
-		    template < typename S , typename N>
-			void   SymbolGraph<S,N>::AddEdge      (Vertex from, Vertex to)
-			// adds an edge between to vertecies of the graph
-		    {
-			g_.AddEdge(s2n_[from], s2n_[to]);
-	    
-		    }
+	    int VrtxSize () 
+	    // returns the number of vertecies in a graph
+	    {
+	    	return g_.VrtxSize();
+	    }
 	  
-		    template < typename S , typename N>
-			size_t SymbolGraph<S,N>::VrtxSize     () const
-			// returns the number of vertecies in a graph
-		    {
-			return g_.VrtxSize();
-		    }
-	  
-		    template < typename S , typename N>
-			size_t SymbolGraph<S,N>::EdgeSize     () const
-			// returns the total number of edges in a graph
-		    {
+	    int EdgeSize () 
+	    // returns the total number of edges in a graph
+	    {
 			return g_.EdgeSize();
-		    }
+	    }
 	  
-		    template < typename S , typename N>
-			size_t SymbolGraph<S,N>::OutDegree    (Vertex x) const
-			// gives the degree out of a vertex in a directed graph (or the normal degree in undirected)
-		    {
-			return g_.OutDegree(s2n_[x]);
-		    }
+	    int OutDegree (String x) 
+	    // gives the degree out of a vertex in a directed graph (or the normal degree in undirected)
+	    {
+	    	return g_.OutDegree(s2n_.get(x));
+	    }
+
+	    int InDegree (String x) 
+	    // gives the degree in of a vertex in a directed graph (or the normal degree is directed)
+	    {
+	    	return g_.InDegree(s2n_.get(x));
+	    }
+
+	    ListIterator<Integer> Begin	(String x) 
+	    // returns the first item in a list of adjacencies
+	    {
+			return g_.Begin(s2n_.get(x));
+	    }
+	    
+	    ListIterator<Integer> End (String x)
+	    {
+	    	return g_.End(s2n_.get(x));
+	    }
 	  
-		    template < typename S , typename N>
-			size_t SymbolGraph<S,N>::InDegree     (Vertex x) const
-			// gives the degree in of a vertex in a directed graph (or the normal degree is directed)
-		    {
-			return g_.InDegree(s2n_[x]);
-		    }
+//	    template < typename S , typename N>
+//	    typename SymbolGraph<S,N>::AdjIterator SymbolGraph<S,N>::End     (Vertex x) const
+//	    // returns the last item in a list of adjacencies
+//	    {
+//			return g_.End(s2n_[x]);
+//	    }
 	  
-		    template < typename S , typename N>
-			typename SymbolGraph<S,N>::AdjIterator SymbolGraph<S,N>::Begin   (Vertex x) const
-			// returns the first item in a list of adjacencies
-		    {
-			return g_.Begin(s2n_[x]);
-		    }
-	  
-		    template < typename S , typename N>
-			typename SymbolGraph<S,N>::AdjIterator SymbolGraph<S,N>::End     (Vertex x) const
-			// returns the last item in a list of adjacencies
-		    {
-			return g_.End(s2n_[x]);
-		    }
-	  
-		    template < typename S , typename N>
-			void   SymbolGraph<S,N>::Push         (const S& s)
-			// add s to the vertex set
-		    {
-			if( s2n_.Includes(s) == s2n_.End() ) // value not in table and was addeded here
+	    void Push (String s)
+	    // add s to the vertex set
+	    {
+	    	if(!s2n_.contains(s) ) // value not in table and was added here
 			{
-			    s2n_.Put( s , lastPushed );
+	    		s2n_.put( s , lastPushed );
 			    if( lastPushed >= g_.VrtxSize() )
-				SetVrtxSize( lastPushed );
-			    n2s_.PushBack(s);
+			    	SetVrtxSize( lastPushed );
+			    n2s_.add(s);
 			    ++lastPushed;
-			    //std::cout << s << " was just pushed onto the graph at " << s2n_[s] << '\n';
 			}
 	    
 			//else
 			//already in the table
-		    }
-	  
-	  
-	} // namespace fsu
-
-	#endif
-	
+	    }
+	    
 }
+	  
+	  
+
+
+
