@@ -4,11 +4,15 @@ public class MovieMatch{
 	
 	String baseActor_ = new String();
 	SymGraph sg_ = new SymGraph();
+	boolean actorExistsInDataBase = false;
+	boolean baseActorExistsInDataBase = false;
+	boolean connectedToBaseActor = false;
+	
 	
 	MovieMatch ( String baseActor)
 	//constructor
 	{
-	  int length = baseActor.length();
+	  //int length = baseActor.length();
 	  baseActor_ = baseActor;	
 	  //baseActor_[length] = '\0';
 	  //strcpy (baseActor_,baseActor);
@@ -134,45 +138,48 @@ public class MovieMatch{
 	int MovieDistance(String actor)
 	// returns the number of movies required to get from actor to baseActor_
 	{
-	  fsu::BFSurvey<size_t> bfs( sg_.g_ );
+	  BfSurvey bfs = new BfSurvey( sg_.g_ );
 	    
-	  std::string actorPtr;
-	  std::string baseActorPtr;
+	  //String actorPtr;
+	  //String baseActorPtr;
 	  int i = 0;
-	  while(actor[i] != '\0')
-	  {
-	    actorPtr += actor[i];
-	    ++i;
-	  }
-	  actorPtr += '\0';
+//	  while(!actor.isEmpty())
+//	  {
+//	    actorPtr += actor[i];
+//	    ++i;
+//	  }
+//	  actorPtr += '\0';
 	  
 	  
 	  if (sg_.s2n_.Includes(actorPtr) == sg_.s2n_.End() )
 	  {
-	    std::cout << actor << " does not exist in the database.  Try again.\n";
-	    return 0;
+	    //std::cout << actor << " does not exist in the database.  Try again.\n";
+		  actorExistsInDataBase = false;
+		  return 0;
 	  }
 	  
 	  int j = 0;
-	  while(baseActor_[j] != '\0' && baseActor_[j] != '\n')
-	  {
-	    baseActorPtr += baseActor_[j];
-	    ++j;
-	  }
-	  baseActorPtr += '\0';
+//	  while(baseActor_[j] != '\0' && baseActor_[j] != '\n')
+//	  {
+//	    baseActorPtr += baseActor_[j];
+//	    ++j;
+//	  }
+//	  baseActorPtr += '\0';
 	  
 	  if (sg_.s2n_.Includes(baseActorPtr) == sg_.s2n_.End() )
 	  {
-	    std::cout << baseActor_ << " does not exist in the database.  Try again.\n";
-	    return 0;
+	    //std::cout << baseActor_ << " does not exist in the database.  Try again.\n";
+		  baseActorExistsInDataBase = false;
+		  return 0;
 	  }
 	  
-	  bfs.Search(sg_.s2n_[baseActorPtr]);
+	  bfs.Search(sg_.s2n_.get(baseActor_);
 	  
 	  if ( bfs.Distance()[sg_.s2n_[actorPtr]] >= sg_.VrtxSize() )
 	  {
-	    std::cout << actorPtr << " has no shared path to "
-	    << baseActorPtr << " \n";
+	    //std::cout << actorPtr << " has no shared path to "
+	    //<< baseActorPtr << " \n";
+		  connectedToBaseActor = false;
 	    return -1;
 	  }
 	  
