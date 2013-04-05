@@ -142,7 +142,7 @@ public class MovieMatch{
 	    
 	  //String actorPtr;
 	  //String baseActorPtr;
-	  int i = 0;
+	  //int i = 0;
 //	  while(!actor.isEmpty())
 //	  {
 //	    actorPtr += actor[i];
@@ -151,14 +151,14 @@ public class MovieMatch{
 //	  actorPtr += '\0';
 	  
 	  
-	  if (sg_.s2n_.Includes(actorPtr) == sg_.s2n_.End() )
+	  if (sg_.s2n_.contains(actor)) // if actor is in the graph
 	  {
 	    //std::cout << actor << " does not exist in the database.  Try again.\n";
 		  actorExistsInDataBase = false;
 		  return 0;
 	  }
 	  
-	  int j = 0;
+	  //int j = 0;
 //	  while(baseActor_[j] != '\0' && baseActor_[j] != '\n')
 //	  {
 //	    baseActorPtr += baseActor_[j];
@@ -166,16 +166,16 @@ public class MovieMatch{
 //	  }
 //	  baseActorPtr += '\0';
 	  
-	  if (sg_.s2n_.Includes(baseActorPtr) == sg_.s2n_.End() )
+	  if (sg_.s2n_.contains(baseActor_))
 	  {
 	    //std::cout << baseActor_ << " does not exist in the database.  Try again.\n";
 		  baseActorExistsInDataBase = false;
 		  return 0;
 	  }
 	  
-	  bfs.Search(sg_.s2n_.get(baseActor_);
+	  bfs.Search(sg_.s2n_.get(baseActor_));
 	  
-	  if ( bfs.Distance()[sg_.s2n_[actorPtr]] >= sg_.VrtxSize() )
+	  if ( bfs.Distance().get(sg_.s2n_.get(actor)) >= sg_.VrtxSize() )
 	  {
 	    //std::cout << actorPtr << " has no shared path to "
 	    //<< baseActorPtr << " \n";
@@ -183,7 +183,7 @@ public class MovieMatch{
 	    return -1;
 	  }
 	  
-	  return bfs.Distance()[sg_.s2n_[actorPtr]] / 2;
+	  return bfs.Distance().get(sg_.s2n_.get(actor)) / 2;
 	}
 
 }
