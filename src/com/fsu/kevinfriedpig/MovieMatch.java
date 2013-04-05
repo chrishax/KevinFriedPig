@@ -16,7 +16,7 @@ public class MovieMatch{
 	boolean baseActorExistsInDataBase = false;
 	boolean connectedToBaseActor = false;
 	Context context;
-	int 	vertexSize = 4200;
+	int 	vertexSize = 207200;
 	
 	MovieMatch ( String baseActor)
 	//constructor
