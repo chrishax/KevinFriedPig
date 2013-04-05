@@ -6,20 +6,32 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:background="@drawable/custom_button"
         android:orientation="vertical" >
 
         <ProgressBar
-            android:id="@+id/progressBar1"
+            android:id="@+id/pb_progressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_alignLeft="@+id/linearLayout1"
+        android:layout_alignRight="@+id/linearLayout1"
+        android:text="@string/load_progress_txt"
+        android:textColor="@color/gold2"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
