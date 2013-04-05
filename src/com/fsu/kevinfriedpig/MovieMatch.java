@@ -1,5 +1,13 @@
 package com.fsu.kevinfriedpig;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import android.content.Context;
+import android.content.res.AssetManager;
+
 public class MovieMatch{
 	
 	String baseActor_ = new String();
@@ -7,7 +15,8 @@ public class MovieMatch{
 	boolean actorExistsInDataBase = false;
 	boolean baseActorExistsInDataBase = false;
 	boolean connectedToBaseActor = false;
-	
+	Context context;
+	int 	vertexSize = 4200;
 	
 	MovieMatch ( String baseActor)
 	//constructor
@@ -18,121 +27,107 @@ public class MovieMatch{
 	  //strcpy (baseActor_,baseActor);
 	}
 
-	void Load (String filename)
-	// loads a moview/actor table
-	{
-	  std::ifstream movieFile;
-	  movieFile.open(filename);
-	  if (!movieFile.is_open())
-	  {
-	    std::cout << " ** Error: cannot open file " << filename << '\n';
-	    return;
-	  }
-	  
-	  //read 1 for size
-	  size_t vertexSize = 0;
-	  while (!movieFile.eof())
-	  {
-	    fsu::String line;
-	    line.GetLine(movieFile);
-	    size_t index = 0;
-	    
-	    while( index < line.Length() )
-	    {
-	      for(; index < line.Length(); ++index)
-	      {//interate through line from index to first '/'
-	        if ( line[index] == '/' || line[index] == '\0')
-	          ++vertexSize;
-	        else if ( line[index] == '\n' )
-	        {
-	          ++vertexSize;
-	          break;
-	        }
-	      }
-	    }
-	  }
-	  sg_.SetVrtxSize(vertexSize);
-	  
-	  movieFile.close();
-	  
-	  //read 2 for the numbers
-	  movieFile.open(filename);
-	  //take in one line at a time until end of file.
-	  while (!movieFile.eof())
-	  {
-	    size_t startIndex = 0,
-	    index = 0;
-	    bool gotMovie = false,
-	    eol = false;
-	    fsu::String line;
-	    std::string movie;
-	    line.GetLine(movieFile);
-	    
-	    //iterate though movie titles or actor names by using '/' to delimit a "token"
-	    while(index < line.Length() )
-	    {
-	      std::string actor;
-	      startIndex = index;
-	      for(; index < line.Length(); ++index)
-	      {//interate through line from index to first '/'
-	        if ( line[index] == '/' )
-	        {
-	          break;
-	        }
-	        else if ( line[index] == '\0' )
-	        {
-	          eol = true;
-	          break;
-	        }
-	      }
-	      if ( !gotMovie )
-	      {//if we havent gotten a movie yet get movie title
-	        for( size_t j = startIndex; j < index; ++j )
-	          movie += line[j];
-	        
-	        movie += '\0';
-	        sg_.Push( movie );
-	        ++index;
-	        gotMovie = true;
-	      }
-	      else
-	      {//else get actor name
-	        
-	        std::string lastName;
-	        bool gotLast = false;
-	        bool dumpEnd = false;
-	        
-	        for( size_t j = startIndex; j < index; ++j )
-	        {
-	          if( line[j] != ',' && !gotLast )
-	            lastName += line[j];
-	          else if ( line [j] == ',' ) // ditch comma and the following space
-	          {
-	            gotLast = true;
-	            ++j;
-	          }
-	          else if ( gotLast && line[j] == ' ' &&  line[j+1] == '(' ) // ditch the spaces after FN
-	            gotLast = true;
-	          else if ( gotLast && line[j] != '(' && !dumpEnd )
-	            actor += line[j];
-	          else if ( line[j] == '(' )
-	            dumpEnd = true;
-	          else if ( dumpEnd )
-	            break;
-	          else
-	            std::cout << " *** ERROR: Actor name couldn't be interpreted\n";
-	        }
-	        actor += ' ';
-	        actor += lastName;
-	        
-	        actor += '\0';
-	        sg_.Push( actor );
-	        sg_.AddEdge( movie, actor );
-	        ++index;
-	      }    } //while (!eol)
-	  } // while (!movieFile.eof())
-	  movieFile.close();
-	}  // load ( const char * filename)
+	
+	void load(){
+		
+		AssetManager amInput = context.getAssets();
+        BufferedReader reader;
+        InputStream is = null;
+        sg_.SetVrtxSize(vertexSize);
+        int 	startIndex = 0,
+        		index = 0;
+        Boolean gotMovie = false;
+        		String line = "";
+        	    String movie = "";
+     
+        try {
+			is = amInput.open("movies.txt");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+        reader = new BufferedReader(new InputStreamReader(is));
+        
+        
+       try {
+		while( (line = reader.readLine()) != null ){
+		    
+		    //iterate though movie titles or actor names by using '/' to delimit a "token"
+		    while(index < line.length() )
+		    {
+		      String actor = "";
+		      startIndex = index;
+		      for(; index < line.length(); ++index)
+		      {//interate through line from index to first '/'
+		        if ( line.charAt(index) == '/' )
+		        {
+		          break;
+		        }
+		        else if ( line.charAt(index) == '\0' )
+		        {
+		          break;
+		        }
+		      }
+		      if ( !gotMovie )
+		      {//if we havent gotten a movie yet get movie title
+		        for( int j = startIndex; j < index; ++j )
+		          movie += line.charAt(j);
+		        
+		        movie += '\0';
+		        sg_.Push( movie );
+		        ++index;
+		        gotMovie = true;
+		      }
+		      else
+		      {//else get actor name
+		        
+		        String 	lastName = "";
+		        Boolean gotLast = false,
+		        		dumpEnd = false;
+		        
+		        for( int j = startIndex; j < index; ++j )
+		        {
+		          if( line.charAt(j) != ',' && !gotLast )
+		            lastName += line.charAt(j);
+		          else if ( line.charAt(j) == ',' ) // ditch comma and the following space
+		          {
+		            gotLast = true;
+		            ++j;
+		          }
+		          else if ( gotLast && line.charAt(j) == ' ' &&  line.charAt(j + 1) == '(' ) // ditch the spaces after FN
+		            gotLast = true;
+		          else if ( gotLast && line.charAt(j) != '(' && !dumpEnd )
+		        actor += line.charAt(j);
+		          else if ( line.charAt(j) == '(' )
+		            dumpEnd = true;
+		          else if ( dumpEnd )
+		            break;
+		        }
+		        actor += ' ';
+		        actor += lastName;
+		        
+		        actor += '\0';
+		        sg_.Push( actor );
+		        sg_.AddEdge( movie, actor );
+		        ++index;
+		      }   
+		 
+		    }
+		}
+	} catch (IOException e1) {
+		
+		e1.printStackTrace();
+	}
+       
+       try {
+    	   reader.close();
+       } catch (IOException e) {
+    	   e.printStackTrace();
+       }
+            
+            
+	}
+    
 
 
 	int MovieDistance(String actor)
@@ -187,3 +182,52 @@ public class MovieMatch{
 	}
 
 }
+	
+	
+	
+	
+    
+    
+    
+//  /*
+//   * precount movie total to get vertexSize
+//   * This saves exponential growth problems in 
+//   * resizing vectors every time a bound is reached
+//   */
+//  
+//  try {
+//		is = amInput.open("movies.txt");
+//	} catch (IOException e) {
+//		e.printStackTrace();
+//	}
+//      
+//  reader = new BufferedReader(new InputStreamReader(is));
+//  try {
+//  	while( (mvData = reader.readLine()) != null ){
+//		
+//			int index = 0;
+//			while( index < mvData.length() )
+//		    {
+//		      for(; index < mvData.length(); ++index)
+//		      {//interate through line from index to first '/'
+//		        if ( mvData.charAt(index)== '/' || mvData.charAt(index) == '\0')
+//		          ++vertexSize;
+//		        else if ( mvData.charAt(index) == '\n' )
+//		        {
+//		          ++vertexSize;
+//		          break;
+//		        }
+//		      }
+//			}
+//		}//while lines left
+//	} catch (IOException e1) {
+//		
+//		e1.printStackTrace();
+//	}
+//  try {
+//		reader.close();
+//	} catch (IOException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
+  

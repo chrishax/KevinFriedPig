@@ -5,4 +5,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
 
+    <!-- Main View Strings -->
+    <string name="main_instruct_lbl1">Search by Last Name</string>
+    <string name="main_instruct_lbl2">Choose Actor from Drop Down</string>
+    <string name="main_search_btn">Search</string>
+    <string name="main_calc_btn">Calculate</string>
+    <string name="main_search_hint">Enter a Last Name</string>
+    
+    <!-- Spash Screen Strings -->
+    <string name="splash_png1_info">Downloaded and altered from Google Images</string>
+    <string name="splash_png2_info">Created from editing stock FSU logo photo by: Christian Smith</string>
 </resources>

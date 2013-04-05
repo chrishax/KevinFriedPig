@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:contentDescription="@string/splash_png2_info"
         android:src="@drawable/fsupc" />
 
     <ImageView
@@ -19,14 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/imageView2"
         android:layout_alignParentTop="true"
+        android:contentDescription="@string/splash_png1_info"
         android:src="@drawable/bacon" />
-
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
-        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
