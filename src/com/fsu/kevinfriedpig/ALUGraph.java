@@ -4,6 +4,8 @@ import java.util.Vector;
 import java.util.List;
 import java.util.ListIterator;
 
+import android.util.Log;
+
 public class ALUGraph {
 	
 //	public:
@@ -41,8 +43,9 @@ public class ALUGraph {
 
 	
 	void SetVrtxSize (int n)
- 	{
+ 	{Log.w("alugraph", "setvrtxsize, before alu.set");
 		al_.setSize(n);
+		Log.w("alugraph", "setvrtxsize, before alu.set");
  	}
 
 	void AddEdge (int from, int to)

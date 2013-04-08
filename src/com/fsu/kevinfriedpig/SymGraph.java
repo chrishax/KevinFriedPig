@@ -4,6 +4,8 @@ import java.util.ListIterator;
 import java.util.Vector;
 import java.util.Hashtable;
 
+import android.util.Log;
+
 public class SymGraph {
 
 	
@@ -36,7 +38,7 @@ public class SymGraph {
 //		N GetNumber ( S s ) { return s2n_[s]; }
 //		//private: // changed for the purposes of this
 
-		ALUGraph	    	  g_;
+		ALUGraph g_ = new ALUGraph();
 		Hashtable<String, Integer> s2n_;
 		Vector<String>        n2s_;
 		Integer  lastPushed;
@@ -45,22 +47,27 @@ public class SymGraph {
 	    SymGraph ( )
 		// default constructor
 	    {
+	    	Log.w("symgraph", "symgraph( ), enter constructor");
 	    	lastPushed = 0;
+	    	Log.w("symgraph", "symgraph( ), exit constructor");
 	    }
 
 	    SymGraph ( int n )
 	    // constructor that initializes the size of the graph and underlying conversions
 		{
+	    	Log.w("symgraph", "symgraph( int n ), enter constructor");
 	    	g_.SetVrtxSize(n);
 	    	//s2n_ -> n
 	    	n2s_.setSize(n);
 	    	lastPushed = 0;
+	    	Log.w("symgraph", "symgraph( int n ), exit constructor");
 		}
 	  
 	    void SetVrtxSize  (int n)
 	    // Sets the vertex size of the graph
-	    {
+	    {Log.w("symgraph", "setvrtxsize, before alu.set");
 	    	g_.SetVrtxSize( n );
+	    	Log.w("symgraph", "setvrtxsize, before alu.set");
 	    }
 	  
 	    void AddEdge (String from, String to)
