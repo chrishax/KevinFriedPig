@@ -8,6 +8,7 @@
 package com.fsu.kevinfriedpig;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,6 +20,7 @@ import android.content.res.AssetManager;
 import android.os.AsyncTask;  
 import android.os.Bundle;  
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.ProgressBar;  
 import android.widget.TextView;  
   
@@ -28,25 +30,27 @@ public class LoadingView extends Activity {
 	TextView 	tv_progress;
 	ProgressBar	pb_progress;
 	MovieLoad 	ml;
+	AssetManager amInput;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+	
 		setContentView(R.layout.loading_view);
-		
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
+				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
 		tv_progress=(TextView)findViewById(R.id.tv_progress);
 		pb_progress=(ProgressBar)findViewById(R.id.pb_progressBar);
-		MovieLoad ml = new MovieLoad();
-		Log.w("LoadingView", "oncreate,before execute");
+		amInput = this.getAssets();
+		
+		ml = new MovieLoad("Kevin Bacon");
+	
 		ml.execute();
+		
 				
 	}
 
-	
-	
-	
-	
 	
 	
 	
@@ -54,7 +58,7 @@ public class LoadingView extends Activity {
 	private class MovieLoad extends AsyncTask< Void, Integer, Void >{
 	
 		String baseActor_ = "Kevin Bacon";
-		SymGraph sg_ = new SymGraph();
+		SymGraph sg_;
 //		boolean actorExistsInDataBase = false;
 //		boolean baseActorExistsInDataBase = false;
 //		boolean connectedToBaseActor = false;
@@ -66,9 +70,13 @@ public class LoadingView extends Activity {
 		/*
 		 * constructor
 		 */
-//		MovieLoad(String base){
-//			baseActor_ = new String(base);
-//		}
+		
+		MovieLoad(String base){
+			 sg_ = new SymGraph();
+			baseActor_ = new String(base);
+		}
+		
+		
 		
 		/*
 		 * Loads movies.txt
@@ -77,44 +85,47 @@ public class LoadingView extends Activity {
 		 */
 		@Override
 		protected Void doInBackground(Void... params) {
-			Log.w("MovieLoad", "doInBackground, first line");
+			
 			sg_.SetVrtxSize(vertexSize);
-			Log.w("MovieLoad", "doInBackground, after sg_.SetVrtxSize");
+			
 	        String line = "";
-	     			
-			AssetManager amInput = context.getAssets();
+	        
+			
+			
 	        BufferedReader reader;
+	        
 	        InputStream is = null;
-	     
-	        Log.w("MovieLoad", "doInBackground, after Inputstream is = null");
-	        //open movies.txt
+			
+	        
 	        try {
 				is = amInput.open("movies.txt");
-			} catch (IOException e) {
-				e.printStackTrace();
-				Log.w("MovieLoad", "doInBackground, failed to open movies.txt");
+			} catch (IOException e2) {
+				//Log.w("MovieLoad", "doInBackground, open movies.txt failed");
+				e2.printStackTrace();
 			}
-	        Log.w("MovieLoad", "doInBackground, before reader = new");
+			
+	        
 	        reader = new BufferedReader(new InputStreamReader(is));
-	        Log.w("MovieLoad", "doInBackground, after reader = new");
+	        
 	        
 	       try {
 			while( (line = reader.readLine()) != null ){
-				Log.w("MovieLoad", "doInBackground, inside while(readLine ! null)");
+				//Log.w("MovieLoad", "doInBackground, inside while(readLine ! null)");
 				int 	startIndex = 0,
 		        		index = 0;
 		        Boolean gotMovie = false;
 		        String movie = "";
 		        int current = ++counter / vertexSize;
 		        		
-		        //publish updates at 5% intervals
-		       if ( (current % 5) == 0 && current <= 95)
+		       // publish updates at 5% intervals
+		       if ( ((current % 2) == 0) && current <= 100)
 		    	   publishProgress(current);
 		        		
-		        	    
+		       //Log.w("MovieLoad", "doInBackground, before while(index<length)");
 			    //iterate though movie titles or actor names by using '/' to delimit a "token"
 			    while(index < line.length() )
 			    {
+			    	//Log.w("MovieLoad", "doInBackground, inside while(index<length)");
 			      String actor = "";
 			      startIndex = index;
 			      for(; index < line.length(); ++index)
@@ -128,19 +139,23 @@ public class LoadingView extends Activity {
 			          break;
 			        }
 			      }
+			      
+////Log.w("doInBackground","before if !gotmovie");
 			      if ( !gotMovie )
 			      {//if we havent gotten a movie yet get movie title
 			        for( int j = startIndex; j < index; ++j )
 			          movie += line.charAt(j);
-			        
-			        movie += '\0';
+			        //Log.w("doInBackground","movie = " + movie);			        
+			        //movie += '\0';
+			        //Log.w("doInBackground","before sg_.push");
 			        sg_.Push( movie );
+			        //Log.w("doInBackground","after sg_.push");
 			        ++index;
 			        gotMovie = true;
 			      }
 			      else
 			      {//else get actor name
-			        
+			    	  //Log.w("doInBackground","first line in reading actor");
 			        String 	lastName = "";
 			        Boolean gotLast = false,
 			        		dumpEnd = false;
@@ -163,19 +178,23 @@ public class LoadingView extends Activity {
 			          else if ( dumpEnd )
 			            break;
 			        }
+			      
 			        actor += ' ';
+			      
 			        actor += lastName;
-			        
-			        actor += '\0';
+			      
+			        //actor += '\0';
 			        sg_.Push( actor );
+			      
 			        sg_.AddEdge( movie, actor );
+			      
 			        ++index;
 			      }   
 			 
 			    }
 			}
 		} catch (IOException e1) {
-			Log.w("MovieLoad", "doInBackground, IOException from readline");
+			//Log.w("MovieLoad", "doInBackground, IOException from readline");
 			e1.printStackTrace();
 		}
 	       
@@ -183,7 +202,7 @@ public class LoadingView extends Activity {
 	    	   reader.close();
 	       } catch (IOException e) {
 	    	   e.printStackTrace();
-	    	   Log.w("MovieLoad", "doInBackground, IOException from file.close()");
+	    	   //Log.w("MovieLoad", "doInBackground, IOException from file.close()");
 	       }
 	            
 	          return null;  
@@ -194,12 +213,17 @@ public class LoadingView extends Activity {
 		@Override  
 		protected void onProgressUpdate(Integer... values)  
 		{  
+			//Log.w("MovieLoad", "onProgressUpdate, before if values");
 			//Update the progress at the UI if progress value is smaller than 100  
 			if(values[0] <= 100)  
-			{  
+			{
+				//Log.w("MovieLoad", "onProgressUpdate, inside if values");
 				tv_progress.setText("Progress: " + Integer.toString(values[0]) + "%");  
 				pb_progress.setProgress(values[0]);  
+				//Log.w("MovieLoad", "onProgressUpdate, after if values");
 			}  
+			//Log.w("MovieLoad", "onProgressUpdate, last line");
+			
 		}  
 	  
 	        //After executing the code in the thread  

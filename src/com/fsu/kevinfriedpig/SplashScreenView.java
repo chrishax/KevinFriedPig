@@ -1,7 +1,6 @@
 package com.fsu.kevinfriedpig;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +9,9 @@ import android.view.WindowManager;
  
 public class SplashScreenView extends Activity {
  
-	Context context = this;
+	
    private static String TAG = SplashScreenView.class.getName();
-   private static long SLEEP_TIME = 5;    // Sleep for some time
+   private static long SLEEP_TIME = 3;    // Sleep for some time
  
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +39,14 @@ public class SplashScreenView extends Activity {
          } catch (Exception e) {
             Log.e(TAG, e.getMessage());
          }
-         Log.w("splashScreenView", "before intent call");
+
          // Start main activity
-         Intent loadIntent = new Intent(context, LoadingView.class);
-         startActivityForResult(loadIntent, 0);
-         Log.w("splashScreenView", "before finish()");
+         Intent loadIntent = new Intent(SplashScreenView.this, LoadingView.class);
+
+         startActivity(loadIntent);
+
          SplashScreenView.this.finish();
+
       }
    }
 }

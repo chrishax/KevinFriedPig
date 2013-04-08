@@ -38,7 +38,7 @@ public class SymGraph {
 //		N GetNumber ( S s ) { return s2n_[s]; }
 //		//private: // changed for the purposes of this
 
-		ALUGraph g_ = new ALUGraph();
+		ALUGraph g_;
 		Hashtable<String, Integer> s2n_;
 		Vector<String>        n2s_;
 		Integer  lastPushed;
@@ -47,33 +47,38 @@ public class SymGraph {
 	    SymGraph ( )
 		// default constructor
 	    {
-	    	Log.w("symgraph", "symgraph( ), enter constructor");
+	    	//Log.w("symgraph", "symgraph( ), enter constructor");
+	    	g_ 	 = new ALUGraph();
+	    	s2n_ = new Hashtable<String, Integer>();
+	    	n2s_ = new Vector<String>();
 	    	lastPushed = 0;
-	    	Log.w("symgraph", "symgraph( ), exit constructor");
+	    	//Log.w("symgraph", "symgraph( ), exit constructor");
 	    }
 
 	    SymGraph ( int n )
 	    // constructor that initializes the size of the graph and underlying conversions
 		{
-	    	Log.w("symgraph", "symgraph( int n ), enter constructor");
+	    	//Log.w("symgraph", "symgraph( int n ), enter constructor");
 	    	g_.SetVrtxSize(n);
 	    	//s2n_ -> n
 	    	n2s_.setSize(n);
 	    	lastPushed = 0;
-	    	Log.w("symgraph", "symgraph( int n ), exit constructor");
+	    	//Log.w("symgraph", "symgraph( int n ), exit constructor");
 		}
 	  
 	    void SetVrtxSize  (int n)
 	    // Sets the vertex size of the graph
-	    {Log.w("symgraph", "setvrtxsize, before alu.set");
+	    {//Log.w("symgraph", "setvrtxsize, before alu.set");
 	    	g_.SetVrtxSize( n );
-	    	Log.w("symgraph", "setvrtxsize, before alu.set");
+	    	//Log.w("symgraph", "setvrtxsize, before alu.set");
 	    }
 	  
 	    void AddEdge (String from, String to)
 	    // adds an edge between to vertecies of the graph
 	    {
+	    	//Log.w("symgraph", "addedge, first line passing in " + from + " and " + to  );
 	    	g_.AddEdge(s2n_.get(from), s2n_.get(to));
+	    	//Log.w("symgraph", "addedge, last line"  );
 	    }
 	  
 	    int VrtxSize () 
@@ -121,17 +126,22 @@ public class SymGraph {
 	    void Push (String s)
 	    // add s to the vertex set
 	    {
+	    	//Log.w("SymGraph","Push(String s), first line ");
 	    	if(!s2n_.contains(s) ) // value not in table and was added here
 			{
+	    		//Log.w("SymGraph","Push(String s), inside if ()");
 	    		s2n_.put( s , lastPushed );
 			    if( lastPushed >= g_.VrtxSize() )
 			    	SetVrtxSize( lastPushed );
 			    n2s_.add(s);
 			    ++lastPushed;
+			    //Log.w("SymGraph","Push(String s), exit if() ");
 			}
 	    
 			//else
 			//already in the table
+	    	//Log.w("SymGraph","Push(String s), last line ");
+	    	return;
 	    }
 	    
 }

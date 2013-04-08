@@ -1,10 +1,8 @@
 package com.fsu.kevinfriedpig;
 
+import java.util.LinkedList;
 import java.util.Vector;
-import java.util.List;
 import java.util.ListIterator;
-
-import android.util.Log;
 
 public class ALUGraph {
 	
@@ -29,29 +27,37 @@ public class ALUGraph {
 //	  protected:
 //	    fsu::Vector < fsu::List < Vertex > > al_;
 	
-	Vector<List <Integer> >  al_;
+	Vector<LinkedList <Integer> >  al_;
 
 	ALUGraph ()
 	{
+		al_ = new Vector<LinkedList<Integer>>();
 		al_.setSize(0);
 	}
 
-	ALUGraph ( int n ) 
-	{
-		al_.setSize(n);
-	}
+//	ALUGraph ( int n ) 
+//	{
+//		al_.setSize(n);
+//	}
 
 	
 	void SetVrtxSize (int n)
- 	{Log.w("alugraph", "setvrtxsize, before alu.set");
+ 	{
 		al_.setSize(n);
-		Log.w("alugraph", "setvrtxsize, before alu.set");
+	
  	}
 
 	void AddEdge (int from, int to)
 	{
-		al_.get(from).add(to);
-	    al_.get(to).add(from);
+		LinkedList<Integer> froml = al_.get(from);
+		LinkedList<Integer> tol = al_.get(to);
+		if (froml == null) froml = new LinkedList<Integer>();
+		if (tol == null) tol = new LinkedList<Integer>();
+		
+		froml.add(to);
+		tol.add(from);
+		
+	
 	}
 	
 	int VrtxSize () 
