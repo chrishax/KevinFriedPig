@@ -55,7 +55,7 @@ public class LoadingView extends Activity {
 	
 	
 
-	private class MovieLoad extends AsyncTask< Void, Integer, Void >{
+	private class MovieLoad extends AsyncTask< Void, Integer, Integer>{
 	
 		String baseActor_ = "Kevin Bacon";
 		SymGraph sg_;
@@ -84,7 +84,7 @@ public class LoadingView extends Activity {
 		 * @see android.os.AsyncTask#doInBackground(Params[])
 		 */
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected Integer doInBackground(Void... params) {
 			
 			sg_.SetVrtxSize(vertexSize);
 			
@@ -115,7 +115,7 @@ public class LoadingView extends Activity {
 		        		index = 0;
 		        Boolean gotMovie = false;
 		        String movie = "";
-		        int current = ++counter / vertexSize;
+		        
 		        		
 		      
 		        		
@@ -143,16 +143,20 @@ public class LoadingView extends Activity {
 			      {//if we havent gotten a movie yet get movie title
 			        for( int j = startIndex; j < index; ++j )
 			          movie += line.charAt(j);
-			        //Log.w("doInBackground","movie = " + movie);			        
+			        
+			     // publish updates at 5% intervals
+			        int current = ++counter / vertexSize;   
+			        if ( ((current % 2) == 0) && current <= 100)
+				    	   publishProgress(current);
+				       
+			        Log.w("doInBackground","movie = " + movie);			        
 			        //movie += '\0';
 			        //Log.w("doInBackground","before sg_.push");
 			        sg_.Push( movie );
 			        //Log.w("doInBackground","after sg_.push");
 			        ++index;
 			        gotMovie = true;
-			        // publish updates at 5% intervals
-				       if ( ((current % 2) == 0) && current <= 100)
-				    	   publishProgress(current);
+			        
 			      }
 			      else
 			      {//else get actor name
@@ -198,15 +202,16 @@ public class LoadingView extends Activity {
 			//Log.w("MovieLoad", "doInBackground, IOException from readline");
 			e1.printStackTrace();
 		}
-	       
+		   Log.w("MovieLoad", "doInBackground, before file.close()");
 	       try {
 	    	   reader.close();
 	       } catch (IOException e) {
 	    	   e.printStackTrace();
-	    	   //Log.w("MovieLoad", "doInBackground, IOException from file.close()");
+	    	   Log.w("MovieLoad", "doInBackground, IOException from file.close()");
 	       }
-	            
-	          return null;  
+	       Log.w("MovieLoad", "doInBackground, after file.close()");
+	       //tv_progress.setText("Progress: end of doInBackground");
+	          return 1;  
 		}
 	    
 		
@@ -218,10 +223,10 @@ public class LoadingView extends Activity {
 			//Update the progress at the UI if progress value is smaller than 100  
 			if(values[0] <= 100)  
 			{
-				//Log.w("MovieLoad", "onProgressUpdate, inside if values");
+				Log.w("MovieLoad", "onProgressUpdate, "+values[0]+"");
 				tv_progress.setText("Progress: " + Integer.toString(values[0]) + "%");  
 				pb_progress.setProgress(values[0]);  
-				//Log.w("MovieLoad", "onProgressUpdate, after if values");
+				Log.w("MovieLoad", "onProgressUpdate, after if values");
 			}  
 			//Log.w("MovieLoad", "onProgressUpdate, last line");
 			
@@ -229,7 +234,7 @@ public class LoadingView extends Activity {
 	  
 	        //After executing the code in the thread  
 	        @Override  
-	        protected void onPostExecute(Void result)  
+	        protected void onPostExecute(Integer result)  
 	        {  
 	        	Intent searchIntent = new Intent(context, SearchView.class);
 	            startActivityForResult(searchIntent, 0);  
