@@ -145,7 +145,7 @@ public class LoadingView extends Activity {
 			      {//if we havent gotten a movie yet get movie title
 			        for( int j = startIndex; j < index; ++j )
 			          movie += line.charAt(j);
-			        //Log.w("doInBackground","movie = " + movie);			        
+			        Log.w("doInBackground","movie = " + movie);			        
 			        //movie += '\0';
 			        //Log.w("doInBackground","before sg_.push");
 			        sg_.Push( movie );
