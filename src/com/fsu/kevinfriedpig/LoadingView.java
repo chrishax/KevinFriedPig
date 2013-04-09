@@ -117,9 +117,7 @@ public class LoadingView extends Activity {
 		        String movie = "";
 		        int current = ++counter / vertexSize;
 		        		
-		       // publish updates at 5% intervals
-		       if ( ((current % 2) == 0) && current <= 100)
-		    	   publishProgress(current);
+		      
 		        		
 		       //Log.w("MovieLoad", "doInBackground, before while(index<length)");
 			    //iterate though movie titles or actor names by using '/' to delimit a "token"
@@ -152,6 +150,9 @@ public class LoadingView extends Activity {
 			        //Log.w("doInBackground","after sg_.push");
 			        ++index;
 			        gotMovie = true;
+			        // publish updates at 5% intervals
+				       if ( ((current % 2) == 0) && current <= 100)
+				    	   publishProgress(current);
 			      }
 			      else
 			      {//else get actor name
