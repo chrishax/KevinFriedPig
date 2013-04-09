@@ -231,8 +231,12 @@ public class LoadingView extends Activity {
 	        @Override  
 	        protected void onPostExecute(Void result)  
 	        {  
+	        	Log.w("onPostExecute", "OnPostExecute reached");
 	        	Intent searchIntent = new Intent(context, SearchView.class);
-	            startActivityForResult(searchIntent, 0);  
+	            Log.w("onPostExecute", "before startActivity");
+	        	startActivityForResult(searchIntent, 0);  
+	        	Log.w("onPostExecute", "finished");
+	            
 	        }  
 	      
 		
