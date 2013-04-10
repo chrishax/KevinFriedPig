@@ -8,13 +8,13 @@
 package com.fsu.kevinfriedpig;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;  
@@ -27,10 +27,24 @@ import android.widget.TextView;
 
 public class LoadingView extends Activity {
 
+	int 		fileCnt 	= 0, 
+				parentCount = 117876, //# of lines in parentVector.txt
+				n2sCount 	= 117876, //# of lines in n2sFile.txt
+				s2nCount	= 117876; //# of lines in s2nFile.txt
 	TextView 	tv_progress;
 	ProgressBar	pb_progress;
-	MovieLoad 	ml;
-	AssetManager amInput;
+	AssetManager	amInput;
+	Boolean 	parentBl = false,
+				parentStartedBl = false,
+				s2nBl = false,
+				s2nStartedBl = false,
+				n2sBl = false,
+				n2sStartedBl = false;
+	
+	Vector<Integer> parentVect = new Vector<Integer>( parentCount );
+	Vector<String>	n2sVect = new Vector<String>( n2sCount );
+	Hashtable <String, Integer> s2n = new Hashtable <String, Integer>( s2nCount );
+	
 	
 	
 	@Override
@@ -40,278 +54,340 @@ public class LoadingView extends Activity {
 		setContentView(R.layout.loading_view);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
+		
 		tv_progress=(TextView)findViewById(R.id.tv_progress);
 		pb_progress=(ProgressBar)findViewById(R.id.pb_progressBar);
 		amInput = this.getAssets();
-		
-		ml = new MovieLoad("Kevin Bacon");
-	
-		ml.execute();
-		
-				
+		Log.w("onCreate","before loadFiles");
+		loadFiles();
+		Log.w("onCreate","after loadFiles");		
 	}
 
 	
-	
-	
-
-	private class MovieLoad extends AsyncTask< Void, Integer, Void >{
-	
-		String baseActor_ = "Kevin Bacon";
-		SymGraph sg_;
-//		boolean actorExistsInDataBase = false;
-//		boolean baseActorExistsInDataBase = false;
-//		boolean connectedToBaseActor = false;
-		Context context;
-		int 	vertexSize = 207200,
-				counter = 0;
+	/*
+	 *- starts the separate load file methods on separate threads
+	 *    and runs a continuous loop until they all finish
+	 * -upon complete loading, calls the next view
+	 */
+	private void loadFiles(){
 		
+			Log.w("LoadingView","loadFiles, before thread calls");
+			if ( !parentStartedBl ){
+				new ParentLoad().execute();
+				parentStartedBl = true;
+			}
+			if ( !s2nStartedBl ){
+				new s2nLoad().execute();
+				s2nStartedBl = true;
+			}
+			if ( !n2sStartedBl ){
+				new n2sLoad().execute();
+				n2sStartedBl = true;
+			}
+			Log.w("LoadingView","loadFiles, after thread calls");
 		
+	}
+	
+	/////////////////////////////////////////////////////////////////
+	/*
+	 * loads the parentVector.txt into a Vector<Integer> parentVector  
+	 */
+	/////////////////////////////////////////////////////////////////
+	private class ParentLoad extends AsyncTask< Void, Integer, Void >{
+	
 		/*
-		 * constructor
-		 */
-		
-		MovieLoad(String base){
-			 sg_ = new SymGraph();
-			baseActor_ = new String(base);
-		}
-		
-		
-		
-		/*
-		 * Loads movies.txt
+		 * Loads parentVector.txt
 		 * (non-Javadoc)
 		 * @see android.os.AsyncTask#doInBackground(Params[])
 		 */
 		@Override
 		protected Void doInBackground(Void... params) {
 			
-			sg_.SetVrtxSize(vertexSize);
-			
-	        String line = "";
-	        
-			
-			
+			Log.w("LoadView", "ParentVector, entered successfully");
+			String line = "";
 	        BufferedReader reader;
-	        
 	        InputStream is = null;
-			
+	        int cnt = 0;
+	        float fileSize = (float)s2nCount;
+	        ++fileCnt;
 	        
+	        Log.w("LoadView", "ParentVector, after decl.");
+	        
+	        /*
+	         * open parentVector.txt 
+	         */
 	        try {
-				is = amInput.open("movies.txt");
+				is = amInput.open("parentVector.txt");
 			} catch (IOException e2) {
-				//Log.w("MovieLoad", "doInBackground, open movies.txt failed");
+				Log.w("ParentLoad", "doInBackground, open parentVect.txt failed");
 				e2.printStackTrace();
-			}
-			
-	        
+			} 
 	        reader = new BufferedReader(new InputStreamReader(is));
-	        
-	        
+			
+	        /*
+	         * read in each line, convert to int, and store in vector
+	         */
+	    	Log.w("LoadView", "ParentLoad, before file read");
 	       try {
 			while( (line = reader.readLine()) != null ){
-				//Log.w("MovieLoad", "doInBackground, inside while(readLine ! null)");
-				int 	startIndex = 0,
-		        		index = 0;
-		        Boolean gotMovie = false;
-		        String movie = "";
-		        int current = ++counter / vertexSize;
-		        		
-		      
-		        		
-		       //Log.w("MovieLoad", "doInBackground, before while(index<length)");
-			    //iterate though movie titles or actor names by using '/' to delimit a "token"
-			    while(index < line.length() )
-			    {
-			    	//Log.w("MovieLoad", "doInBackground, inside while(index<length)");
-			      String actor = "";
-			      startIndex = index;
-			      for(; index < line.length(); ++index)
-			      {//interate through line from index to first '/'
-			        if ( line.charAt(index) == '/' )
-			        {
-			          break;
-			        }
-			        else if ( line.charAt(index) == '\0' )
-			        {
-			          break;
-			        }
-			      }
-			      
-////Log.w("doInBackground","before if !gotmovie");
-			      if ( !gotMovie )
-			      {//if we havent gotten a movie yet get movie title
-			        for( int j = startIndex; j < index; ++j )
-			          movie += line.charAt(j);
-			        Log.w("doInBackground","movie = " + movie);			        
-			        //movie += '\0';
-			        //Log.w("doInBackground","before sg_.push");
-			        sg_.Push( movie );
-			        //Log.w("doInBackground","after sg_.push");
-			        ++index;
-			        gotMovie = true;
-			        // publish updates at 5% intervals
-				       if ( ((current % 2) == 0) && current <= 100)
-				    	   publishProgress(current);
-			      }
-			      else
-			      {//else get actor name
-			    	  //Log.w("doInBackground","first line in reading actor");
-			        String 	lastName = "";
-			        Boolean gotLast = false,
-			        		dumpEnd = false;
-			        
-			        for( int j = startIndex; j < index; ++j )
-			        {
-			          if( line.charAt(j) != ',' && !gotLast )
-			            lastName += line.charAt(j);
-			          else if ( line.charAt(j) == ',' ) // ditch comma and the following space
-			          {
-			            gotLast = true;
-			            ++j;
-			          }
-			          else if ( gotLast && line.charAt(j) == ' ' &&  line.charAt(j + 1) == '(' ) // ditch the spaces after FN
-			            gotLast = true;
-			          else if ( gotLast && line.charAt(j) != '(' && !dumpEnd )
-			        actor += line.charAt(j);
-			          else if ( line.charAt(j) == '(' )
-			            dumpEnd = true;
-			          else if ( dumpEnd )
-			            break;
-			        }
-			      
-			        actor += ' ';
-			      
-			        actor += lastName;
-			      
-			        //actor += '\0';
-			        sg_.Push( actor );
-			      
-			        sg_.AddEdge( movie, actor );
-			      
-			        ++index;
-			      }   
-			 
-			    }
+				//publish update to UI thread for progress
+				++cnt;
+				float count = (float)cnt;
+				float cur = ( count / fileSize );
+				int current = (int)( cur * 100 );
+				if ( ((current % 2) == 0) && current <= 100)
+                    publishProgress(current);
+				
+				int value = Integer.parseInt(line);
+				parentVect.add( value );
 			}
-		} catch (IOException e1) {
-			//Log.w("MovieLoad", "doInBackground, IOException from readline");
-			e1.printStackTrace();
-		}
+			
+	       } catch (IOException e1) {
+	    	   Log.w("ParentLoad", "doInBackground, IOException from readline");
+	    	   e1.printStackTrace();
+	       }
 	       
+	       
+	       /*
+	        * close parentVector.txt
+	        */
 	       try {
 	    	   reader.close();
 	       } catch (IOException e) {
 	    	   e.printStackTrace();
-	    	   //Log.w("MovieLoad", "doInBackground, IOException from file.close()");
 	       }
 	            
 	          return null;  
-		}
+		}//doInBackground() for ParentLoad
+		
 	    
-		
-		
+		//when publishProgress is called
 		@Override  
-		protected void onProgressUpdate(Integer... values)  
-		{  
-			//Log.w("MovieLoad", "onProgressUpdate, before if values");
-			//Update the progress at the UI if progress value is smaller than 100  
-			if(values[0] <= 100)  
-			{
-				//Log.w("MovieLoad", "onProgressUpdate, inside if values");
-				tv_progress.setText("Progress: " + Integer.toString(values[0]) + "%");  
-				pb_progress.setProgress(values[0]);  
-				//Log.w("MovieLoad", "onProgressUpdate, after if values");
-			}  
-			//Log.w("MovieLoad", "onProgressUpdate, last line");
-			
-		}  
-	  
-	        //After executing the code in the thread  
-	        @Override  
-	        protected void onPostExecute(Void result)  
-	        {  
-	        	Log.w("onPostExecute", "OnPostExecute reached");
-	        	Intent searchIntent = new Intent(context, SearchView.class);
-	            Log.w("onPostExecute", "before startActivity");
-	        	startActivityForResult(searchIntent, 0);  
-	        	Log.w("onPostExecute", "finished");
-	            
+	    protected void onProgressUpdate(Integer... values)  
+	    {  
+	        //Update the progress at the UI if progress value is smaller than 100  
+	        if(values[0] <= 100)  
+	        {
+	            tv_progress.setText("File " + fileCnt + " of 3: " + Integer.toString(values[0]) + "%");  
+	            pb_progress.setProgress(values[0]);  
 	        }  
+	    }//onProgressUpdate()
+		
+		
+	        //After executing the code in the thread  
+		@Override  
+		protected void onPostExecute(Void result)  
+		{  
+			parentBl = true;
+			newView();
+		}  
 	      
+	}// private class ParentLoad extends AsyncTask< Void, Void, Void >		
 		
 		
-		
-		
-		
-		
-		
+	
+	
+	//////////////////////////////////////////////////////////	
+	/*
+	 * loads the n2sVector.txt into a Vector<String> n2sVector  
+	 */
+	//////////////////////////////////////////////////////////
+	private class n2sLoad extends AsyncTask< Void, Integer, Void >{
 	
 		/*
-		 * calculates baseactor to actor given distance 
+		 * Loads n2sFile.txt
+		 * (non-Javadoc)
+		 * @see android.os.AsyncTask#doInBackground(Params[])
 		 */
-		int MovieDistance(String actor)
-		// returns the number of movies required to get from actor to baseActor_
-		{
-		  BfSurvey bfs = new BfSurvey( sg_.g_ );
-		    
-		  //String actorPtr;
-		  //String baseActorPtr;
-		  //int i = 0;
-	//	  while(!actor.isEmpty())
-	//	  {
-	//	    actorPtr += actor[i];
-	//	    ++i;
-	//	  }
-	//	  actorPtr += '\0';
-		  
-		  
-		  if (sg_.s2n_.contains(actor)) // if actor is in the graph
-		  {
-		    //std::cout << actor << " does not exist in the database.  Try again.\n";
-			  //actorExistsInDataBase = false;
-			  return 0;
-		  }
-		  
-		  //int j = 0;
-	//	  while(baseActor_[j] != '\0' && baseActor_[j] != '\n')
-	//	  {
-	//	    baseActorPtr += baseActor_[j];
-	//	    ++j;
-	//	  }
-	//	  baseActorPtr += '\0';
-		  
-		  if (sg_.s2n_.contains(baseActor_))
-		  {
-		    //std::cout << baseActor_ << " does not exist in the database.  Try again.\n";
-			//  baseActorExistsInDataBase = false;
-			  return 0;
-		  }
-		  
-		  bfs.Search(sg_.s2n_.get(baseActor_));
-		  
-		  if ( bfs.Distance().get(sg_.s2n_.get(actor)) >= sg_.VrtxSize() )
-		  {
-		    //std::cout << actorPtr << " has no shared path to "
-		    //<< baseActorPtr << " \n";
-			//  connectedToBaseActor = false;
-		    return -1;
-		  }
-		  
-		  return bfs.Distance().get(sg_.s2n_.get(actor)) / 2;
+		@Override
+		protected Void doInBackground(Void... params) {
+			
+			Log.w("LoadView", "n2sLoad, entered successfully");
+			String line2 = "";
+	        BufferedReader reader2;
+	        InputStream is = null;
+	        int cnt = 0;
+	        float fileSize = (float)s2nCount;
+	        ++fileCnt;
+	        
+	        Log.w("LoadView", "n2sFile, after decl.");
+	        
+	        /*
+	         * open n2sFile.txt 
+	         */
+	        try {
+				is = amInput.open("n2sFile.txt");
+			} catch (IOException e2) {
+				Log.w("n2sVector", "doInBackground, open n2sFile.txt failed");
+				e2.printStackTrace();
+			} 
+	        reader2 = new BufferedReader(new InputStreamReader(is));
+	        
+	        /*
+	         * read in each line and store in vector
+	         */
+	    	Log.w("LoadView", "n2sFile, before file read");
+	       try {
+			while( (line2 = reader2.readLine()) != null ){
+				//publish update to UI thread for progress
+				++cnt;
+				float count = (float)cnt;
+				float cur = ( count / fileSize );
+				int current = (int)( cur * 100 );
+				if ( ((current % 2) == 0) && current <= 100)
+                    publishProgress(current);
+				n2sVect.add( line2 );
+			}
+			
+		} catch (IOException e1) {
+			Log.w("n2sLoad", "doInBackground, IOException from readline");
+			e1.printStackTrace();
 		}
-	}
-
-
-
-	
-
-	public int distance( String actor ){
-		return ml.MovieDistance( actor );
-	}
+	       
+	       
+	       /*
+	        * close n2sFile.txt
+	        */
+	       try {
+	    	   reader2.close();
+	       } catch (IOException e) {
+	    	   e.printStackTrace();
+	    	   Log.w("n2sLoad", "doInBackground, IOException from file.close()");
+	       }
+	            
+	          return null;  
+		}//doInBackground for n2sLoad
+	    
 		
+		//when publishProgress is called
+		@Override  
+	    protected void onProgressUpdate(Integer... values)  
+	    {  
+	        //Update the progress at the UI if progress value is smaller than 100  
+	        if(values[0] <= 100)  
+	        {
+	            tv_progress.setText("File "+ fileCnt + " of 3: " + Integer.toString(values[0]) + "%");  
+	            pb_progress.setProgress(values[0]);  
+	        }  
+	    }//onProgressUpdate()
+		
+		
+		//After executing the code in the thread  
+		@Override  
+		protected void onPostExecute(Void result)  
+		{  
+			n2sBl = true;
+			newView();
+		}  
+	      
+	}// private  class n2sLoad extends AsyncTask< Void, void, Void >		
 	
 	
+	
+	
+	/////////////////////////////////////////////////////////////////
+	/*
+	* loads the s2nFile.txt into a Hashtable<String, Integer> s2n  
+	*/
+	/////////////////////////////////////////////////////////////////
+	private class s2nLoad extends AsyncTask< Void, Integer, Void >{
+
+	/*
+	* Loads s2nFile.txt
+	* (non-Javadoc)
+	* @see android.os.AsyncTask#doInBackground(Params[])
+	*/
+	@Override
+	protected Void doInBackground(Void... params) {
+		Log.w("LoadView", "s2nLoad, entered successfully");
+		int cnt = 0;
+			
+		String line = "";
+		BufferedReader reader3;
+		InputStream is = null;
+		float fileSize = (float)s2nCount;
+		++fileCnt;
+		
+		Log.w("LoadView", "s2nFile, after decl.");
+
+		/*
+		* open s2nFile.txt 
+		*/
+		try {
+			is = amInput.open("s2nFile.txt");
+		} catch (IOException e2) {
+			Log.w("s2nLoad", "doInBackground, open s2nFile.txt failed");
+			e2.printStackTrace();
+		} 
+		reader3 = new BufferedReader(new InputStreamReader(is));
+		
+		Log.w("LoadView", "s2nFile, before file read");
+		try {
+			while( (line = reader3.readLine()) != null ){
+				
+				//publish update to UI thread for progress
+				++cnt;
+				float count = (float)cnt;
+				float cur = ( count / fileSize );
+				int current = (int)( cur * 100 );
+				if ( ((current % 2) == 0) && current <= 100)
+                    publishProgress(current);
+				
+				//store string and int 
+				 s2n.put( line, cnt );
+			}
+
+		} catch (IOException e1) {
+			Log.w("s2nLoad", "doInBackground, IOException from readline");
+			e1.printStackTrace();
+		}
+
+		/*
+		* close s2nFile.txt
+		*/
+		try {
+			reader3.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;  
+	}
+
+	//when publishProgress is called
+	@Override  
+    protected void onProgressUpdate(Integer... values)  
+    {  
+        //Update the progress at the UI if progress value is smaller than 100  
+        if(values[0] <= 100)  
+        {
+            tv_progress.setText("File "+ fileCnt + " of 3: " + Integer.toString(values[0]) + "%");  
+            pb_progress.setProgress(values[0]);  
+        }  
+    }//onProgressUpdate()
+	
+	
+	//After executing the code in the thread  
+	@Override  
+	protected void onPostExecute(Void result)  
+	{  
+		s2nBl = true;
+		newView();
+	}  
+
+	}// private class s2nLoad extends AsyncTask< Void, Integer, Void >		
+
+	
+	private void newView(){
+		
+		Log.w("loadView", "newView, entered successfully");
+		if ( s2nBl && n2sBl && parentBl ){
+			
+			Intent searchIntent = new Intent(getBaseContext(), SearchView.class);
+	        startActivityForResult(searchIntent, 0); 
+		}
+		else
+			Log.w("LoadView", "newView, all 3 files are not loaded yet.");
+	}
 	
 	
 }
