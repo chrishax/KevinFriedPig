@@ -49,8 +49,11 @@ public class SearchView extends Activity {
 	public void DistanceCalc (View view) { // function called on button click
 		Log.w("DistanceCalc", "entered function");
 		String actor = new String();
+		Log.w("DistanceCalc", "new String processed");
+		// This is where programs come to die
+		Log.w("DistanceCalc", "searchEditText = " + (searchEditText.getText().toString()));
 		
-		if(searchEditText.getText().toString() == "" || searchEditText.getText().toString() == " "){
+		if( searchEditText.getText().toString().trim().length() == 0 ){
 			Log.w("DistanceCalc", "toast should show == nothing or 1 space");
 			Toast.makeText(context, "Please enter an actor or actress", Toast.LENGTH_SHORT).show();
 		}
