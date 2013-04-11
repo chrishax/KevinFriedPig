@@ -54,7 +54,7 @@ public class SearchView extends Activity {
 	            public void onClick(DialogInterface arg0, int arg1) {
 	            	LoadingView.prepareToClose();
 	            	SearchView.super.finish();
-	                android.os.Process.killProcess(android.os.Process.myPid());
+	                //android.os.Process.killProcess(android.os.Process.myPid());
 	            }
 	        }).create().show();
 	}
