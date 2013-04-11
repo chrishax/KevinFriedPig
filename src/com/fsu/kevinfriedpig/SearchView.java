@@ -138,4 +138,5 @@ public class SearchView extends Activity {
 		return distance;
 	}
 	
+	
 }
