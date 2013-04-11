@@ -27,6 +27,11 @@ public class SplashScreenView extends Activity {
       launcher.start();
    }
  
+   @Override
+   public void onBackPressed(){
+	   return;
+   }
+   
    private class IntentLauncher extends Thread {
       @Override
       /**
