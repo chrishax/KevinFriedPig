@@ -13,11 +13,12 @@
     <string name="result_view_contdesc">Downloaded and altered from Google Images</string>
 
     <!-- Main View Strings -->
-    <string name="main_instruct_lbl1">Search by Last Name</string>
+    <string name="main_instruct_lbl1">Search by Actor Name</string>
     <string name="main_instruct_lbl2">Choose Actor from Drop Down</string>
     <string name="main_search_btn">Search</string>
     <string name="main_calc_btn">Calculate</string>
     <string name="main_search_hint">Enter an actor or actress name</string>
+    <string name="main_instructions">This will search the database for the Bacon Number of the given actor or actress. Please enter the name with proper capilization.</string>
     
     
     <!-- Loading View strings -->
