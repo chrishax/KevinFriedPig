@@ -314,8 +314,8 @@ public class LoadingView extends Activity {
 	        //Update the progress at the UI if progress value is smaller than 100  
 	        if(values[0] <= 100)  
 	        {
-	            tvProgress2.setText("File 2 of 3: " + Integer.toString(values[0]) + "%");  
-	            pbProgress2.setProgress(values[0]);  
+	            tvProgress3.setText("File 3 of 3: " + Integer.toString(values[0]) + "%");  
+	            pbProgress3.setProgress(values[0]);  
 	        }  
 	    }//onProgressUpdate()
 
@@ -409,8 +409,8 @@ public class LoadingView extends Activity {
         //Update the progress at the UI if progress value is smaller than 100  
         if(values[0] <= 100)  
         {
-            tvProgress3.setText("File 3 of 3: " + Integer.toString(values[0]) + "%");  
-            pbProgress3.setProgress(values[0]);  
+            tvProgress2.setText("File 2 of 3: " + Integer.toString(values[0]) + "%");  
+            pbProgress2.setProgress(values[0]);  
         }  
     }//onProgressUpdate()
 
