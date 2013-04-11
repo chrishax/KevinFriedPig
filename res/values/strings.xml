@@ -6,8 +6,11 @@
     <string name="menu_settings">Settings</string>
     <string name="loading_view_title">Please Wait</string>
     <string name="search_view_title">Let\'s Play</string>
-    <string name="result_view_title">Results</string>
     
+    <!-- result view strings -->
+    <string name="result_view_title">Results</string>
+    <string name="result_view_blank">  </string>
+    <string name="result_view_contdesc">Downloaded and altered from Google Images</string>
 
     <!-- Main View Strings -->
     <string name="main_instruct_lbl1">Search by Last Name</string>
@@ -24,4 +27,7 @@
     <!-- Spash Screen Strings -->
     <string name="splash_png1_info">Downloaded and altered from Google Images</string>
     <string name="splash_png2_info">Created from editing stock FSU logo photo by: Christian Smith</string>
+    
+    
+    
 </resources>
