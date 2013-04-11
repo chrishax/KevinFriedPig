@@ -23,6 +23,7 @@
     
     <!-- Loading View strings -->
     <string name="load_progress_txt">Loading &#8230; </string>
+    <string name="load_quote">\"I joke that my epitaph will be, \'No Oscars, but at least he had a game named after him.\'\" \n- Kevin Bacon </string>
     
     
     <!-- Spash Screen Strings -->
