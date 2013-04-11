@@ -71,6 +71,7 @@ public class ResultView extends Activity {
 	 * resets the form
 	 */
 	private void resetView(){
+		blInGraph = false;
 		tvBaconNum.setText("");
 		tvTrace.setText("");
 	}
@@ -123,11 +124,16 @@ public class ResultView extends Activity {
 			tvTrace.setText("No path between "+ SearchView.getTrace()[0] +" and " + SearchView.getBaseActor() + " exists.");
 			return;
 		}
+		else if( SearchView.getBaconNum() == 0)
+		{
+			tvTrace.setText(SearchView.getBaseActor() + " is " + SearchView.getBaseActor() + ".");
+			return;
+		}
 		strTrace = SearchView.getTrace()[0] + " was in the movie " + SearchView.getTrace()[1] + strWith;
 		for (i = 2; i < ( SearchView.getDistance() - 1 ); ++i){
 			strTrace = strTrace + SearchView.getTrace()[i] + strWas + SearchView.getTrace()[++i] + strWith;	
 		}
-		strTrace = strTrace + SearchView.getBaseActor();
+		strTrace = strTrace + SearchView.getBaseActor() + "."			;
 		tvTrace.setText(strTrace);
 		Log.w("ResultView","traceCalc() exit successfully");
 		
