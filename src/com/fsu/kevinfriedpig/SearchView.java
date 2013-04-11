@@ -16,10 +16,12 @@ public class SearchView extends Activity {
 	int distance = -1;
 	String [] trace = new String [20]; // evens should be actors and odds movies
 	String baseActor = "Kevin Bacon";
-	int baseActorNum;// = string2number(baseActor);
+	int baseActorNum = LoadingView.string2number(baseActor);
 	
 	@Override
 	   protected void onCreate(Bundle savedInstanceState) {
+		
+		  Log.w("onCreate", "SearchView onCreate entered");
 	      super.onCreate(savedInstanceState);
 	 
 	      this.requestWindowFeature(Window.FEATURE_NO_TITLE);    // Removes title bar
@@ -29,7 +31,9 @@ public class SearchView extends Activity {
 	      calculateButton = (Button)findViewById(R.id.buttonCalculate);
 	      
 	      setContentView(R.layout.search_view);
-
+	      
+	      Log.w("onCreate", "End of onCreate in SearchView");
+	      
 	   }
 	
 	public void Reset () { // used to reset distance to -1 and reset other variables
@@ -50,16 +54,18 @@ public class SearchView extends Activity {
 		
 		while(currNum != baseActorNum)
 		{
-			//trace[cnt] = n2s.get(currNum);
+			trace[cnt] = LoadingView.getN2S().get(currNum);
+			Log.w("MovieDistance", "just stored trace[" + cnt + "] as " + trace[cnt]);
 			++cnt;
 			
-			//currNum == parent.get(currNum);
+			currNum = LoadingView.getParentVector().get(currNum);
 		}
 		if (currNum == baseActorNum)
-			trace[cnt] = "0";
-			//trace[cnt] = n2s.get(currNum);
+			trace[cnt] = LoadingView.getN2S().get(currNum);
 		else
 			Log.w("ELSE", "trace didn't follow correctly");
+		
+		Log.w("MovieDistance", "just stored trace[" + cnt + "] as " + trace[cnt]);
 		
 		openResults(cnt, trace);
 	}
