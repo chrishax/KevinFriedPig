@@ -26,14 +26,17 @@
         <activity 
             android:name=".LoadingView" 
             android:label="@string/loading_view_title"
+            android:screenOrientation="portrait"
             ></activity>
         <activity 
             android:name=".SearchView" 
             android:label="@string/search_view_title"
+            android:screenOrientation="portrait"
             ></activity>
         <activity 
             android:name=".ResultView" 
             android:label="@string/result_view_title"
+            android:screenOrientation="portrait"
             ></activity>
     </application>
 
