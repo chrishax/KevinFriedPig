@@ -1,6 +1,9 @@
 package com.fsu.kevinfriedpig;
 
+import java.io.IOException;
+
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class SearchView extends Activity {
 
@@ -18,6 +22,7 @@ public class SearchView extends Activity {
 	String [] trace = new String [20]; // evens should be actors and odds movies
 	String baseActor = "Kevin Bacon";
 	int baseActorNum = LoadingView.string2number(baseActor);
+	Context context = this;
 	
 	@Override
 	   protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +47,30 @@ public class SearchView extends Activity {
 	}
 	
 	public void DistanceCalc (View view) { // function called on button click
+		Log.w("DistanceCalc", "entered function");
 		String actor = new String();
-		actor = searchEditText.getText().toString();
 		
-		MovieDistance(actor);
+		if(searchEditText.getText().toString() == "" || searchEditText.getText().toString() == " "){
+			Log.w("DistanceCalc", "toast should show == nothing or 1 space");
+			Toast.makeText(context, "Please enter an actor or actress", Toast.LENGTH_SHORT).show();
+		}
+		else{
+			Log.w("DistanceCalc", "something is typed - call MovieDistance");
+			actor = searchEditText.getText().toString();
+			Log.w("DistanceCalc", "actor set from string");
+			MovieDistance(actor);
+		}
 		
 	}
 	
 	public void MovieDistance (String actor) { //function to find the moviedistance from actor to the baseActor (Kevin Bacon)
+		Log.w("MovieDistance", "entered function");
+		
 		int currNum = 0; // = s2n.get(actor);
 		int cnt = 0;
 		
 		if( actor == "Kevin Bacon"){
+			Log.w("MovieDistance", "Actor == KevinBacon");
 			cnt = 0;
 			trace[0] = "Kevin Bacon";
 			openResults(cnt, trace);
