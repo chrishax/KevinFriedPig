@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ProgressBar;  
 import android.widget.TextView;  
+import android.widget.Toast;
   
 
 public class LoadingView extends Activity {
@@ -68,6 +69,11 @@ public class LoadingView extends Activity {
 		Log.w("onCreate","before loadFiles");
 		loadFiles();
 		Log.w("onCreate","after loadFiles");		
+	}
+	
+	@Override
+	public void onBackPressed(){
+		Toast.makeText(getBaseContext(), "Please wait for loading to finish!", Toast.LENGTH_SHORT).show();
 	}
 
 
