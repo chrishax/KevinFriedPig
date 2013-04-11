@@ -10,8 +10,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:onClick="KevinClick"
+        android:onClick="kevinClick"
         android:contentDescription="@string/result_view_contdesc"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="5dp"
         android:src="@drawable/baconr" />
 
     <TextView
@@ -21,6 +23,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/imbKfp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:text="@string/result_view_blank"
         android:textColor="@color/gold3"
         android:textAppearance="?android:attr/textAppearanceLarge" />

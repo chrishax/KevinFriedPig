@@ -73,5 +73,10 @@ public class SearchView extends Activity {
 	public void openResults (int totDistance, String[] trace) {
 		
 	}
+
+	public static int getBaconNum() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

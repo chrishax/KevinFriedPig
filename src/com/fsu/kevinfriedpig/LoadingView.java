@@ -31,8 +31,12 @@ public class LoadingView extends Activity {
 				parentCount = 117876, //# of lines in parentVector.txt
 				n2sCount 	= 117876, //# of lines in n2sFile.txt
 				s2nCount	= 117876; //# of lines in s2nFile.txt
-	TextView 	tv_progress;
-	ProgressBar	pb_progress;
+	TextView 	tvProgress1,
+				tvProgress2,
+				tvProgress3;
+	ProgressBar	pbProgress1,
+				pbProgress2,
+				pbProgress3;
 	AssetManager	amInput;
 	Boolean 	parentBl = false,
 				parentStartedBl = false,
@@ -54,8 +58,12 @@ public class LoadingView extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
 		
-		tv_progress=(TextView)findViewById(R.id.tv_progress);
-		pb_progress=(ProgressBar)findViewById(R.id.pb_progressBar);
+		tvProgress1=(TextView)findViewById(R.id.tvProgress1);
+		tvProgress2=(TextView)findViewById(R.id.tvProgress2);
+		tvProgress3=(TextView)findViewById(R.id.tvProgress3);
+		pbProgress1=(ProgressBar)findViewById(R.id.pbProgress1);
+		pbProgress2=(ProgressBar)findViewById(R.id.pbProgress2);
+		pbProgress3=(ProgressBar)findViewById(R.id.pbProgress3);
 		amInput = this.getAssets();
 		Log.w("onCreate","before loadFiles");
 		loadFiles();
@@ -199,8 +207,8 @@ public class LoadingView extends Activity {
 	        //Update the progress at the UI if progress value is smaller than 100  
 	        if(values[0] <= 100)  
 	        {
-	            tv_progress.setText("File " + fileCnt + " of 3: " + Integer.toString(values[0]) + "%");  
-	            pb_progress.setProgress(values[0]);  
+	            tvProgress1.setText("File 1 of 3: " + Integer.toString(values[0]) + "%");  
+	            pbProgress1.setProgress(values[0]);  
 	        }  
 	    }//onProgressUpdate()
 		
@@ -268,7 +276,7 @@ public class LoadingView extends Activity {
 				if ( ((current % 2) == 0) && current <= 100)
                     publishProgress(current);
 				n2sVect.add( line2 );
-				Log.w("LoadView", "n2sVect adding " + line2 + "so that n2sVect[" + cnt + "] = " + n2sVect.get(cnt));
+				//Log.w("LoadView", "n2sVect adding " + line2 + "so that n2sVect[" + cnt + "] = " + n2sVect.get(cnt));
 			}
 			
 		} catch (IOException e1) {
@@ -298,8 +306,8 @@ public class LoadingView extends Activity {
 	        //Update the progress at the UI if progress value is smaller than 100  
 	        if(values[0] <= 100)  
 	        {
-	            tv_progress.setText("File "+ fileCnt + " of 3: " + Integer.toString(values[0]) + "%");  
-	            pb_progress.setProgress(values[0]);  
+	            tvProgress2.setText("File 2 of 3: " + Integer.toString(values[0]) + "%");  
+	            pbProgress2.setProgress(values[0]);  
 	        }  
 	    }//onProgressUpdate()
 		
@@ -392,8 +400,8 @@ public class LoadingView extends Activity {
         //Update the progress at the UI if progress value is smaller than 100  
         if(values[0] <= 100)  
         {
-            tv_progress.setText("File "+ fileCnt + " of 3: " + Integer.toString(values[0]) + "%");  
-            pb_progress.setProgress(values[0]);  
+            tvProgress3.setText("File 3 of 3: " + Integer.toString(values[0]) + "%");  
+            pbProgress3.setProgress(values[0]);  
         }  
     }//onProgressUpdate()
 	
