@@ -29,14 +29,14 @@ public class SearchView extends Activity {
 		
 		  Log.w("onCreate", "SearchView onCreate entered");
 	      super.onCreate(savedInstanceState);
-	 
-	      this.requestWindowFeature(Window.FEATURE_NO_TITLE);    // Removes title bar
-	      this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);    // Removes notification bar
-	 
-	      searchEditText = (EditText)findViewById(R.id.editTextSearch);
-	      calculateButton = (Button)findViewById(R.id.buttonCalculate);
 	      
 	      setContentView(R.layout.search_view);
+	 
+	      getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
+					WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
+	      
+	      searchEditText = (EditText)findViewById(R.id.editTextSearch);
+	      calculateButton = (Button)findViewById(R.id.buttonCalculate);
 	      
 	      Log.w("onCreate", "End of onCreate in SearchView");
 	      
@@ -51,9 +51,9 @@ public class SearchView extends Activity {
 		String actor = new String();
 		Log.w("DistanceCalc", "new String processed");
 		// This is where programs come to die
-		Log.w("DistanceCalc", "searchEditText = " + (searchEditText.getText().toString()));
+		//Log.w("DistanceCalc", "searchEditText = " + (searchEditText.getText().toString()));
 		
-		if( searchEditText.getText().toString().trim().length() == 0 ){
+		if( searchEditText.getText().length() == 0 ){
 			Log.w("DistanceCalc", "toast should show == nothing or 1 space");
 			Toast.makeText(context, "Please enter an actor or actress", Toast.LENGTH_SHORT).show();
 		}
@@ -69,27 +69,34 @@ public class SearchView extends Activity {
 	public void MovieDistance (String actor) { //function to find the moviedistance from actor to the baseActor (Kevin Bacon)
 		Log.w("MovieDistance", "entered function");
 		
-		int currNum = 0; // = s2n.get(actor);
+		int currNum = LoadingView.getS2N().get(actor);
 		int cnt = 0;
 		
-		if( actor == "Kevin Bacon"){
-			Log.w("MovieDistance", "Actor == KevinBacon");
+		if( currNum == baseActorNum){ // the actor entered is the base actor BN of 0
+			Log.w("MovieDistance", "Actor == BaseActor");
 			cnt = 0;
-			trace[0] = "Kevin Bacon";
+			trace[0] = baseActor;
 			openResults(cnt, trace);
 		}
-		else if(!LoadingView.getS2N().contains(actor)){
+		else if(!LoadingView.getS2N().contains(actor)){ // person isn't in the database at all
 			cnt = -1; // person is not in the database
 			notInDatabase();
 		}
-		else {
-			while(currNum != baseActorNum)
+		else { // person is in the database
+			if(LoadingView.getParentVector().get(currNum) >= 117877) { // person has no connection to baseActor
+				distance = -2; // no path to Kevin Bacon but in graph
+				trace[0] = LoadingView.getN2S().get(currNum);
+				openResults(cnt, trace);
+			}
+			
+			while(currNum != baseActorNum) // else person in graph and has connection
 			{
 				trace[cnt] = LoadingView.getN2S().get(currNum);
 				Log.w("MovieDistance", "just stored trace[" + cnt + "] as " + trace[cnt]);
 				++cnt;
 			
 				currNum = LoadingView.getParentVector().get(currNum);
+					
 			}
 			if (currNum == baseActorNum)
 				trace[cnt] = LoadingView.getN2S().get(currNum);
