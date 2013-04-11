@@ -13,8 +13,7 @@ public class ResultView extends Activity {
 
 	TextView	tvBaconNum,
 				tvTrace;
-	String		strBaseActor = "Kevin Bacon";
-	String[]	strTrace;
+	String		strTrace;
 	int 		intEaster,
 				intResult;
 	Boolean 	blInGraph;
@@ -104,12 +103,19 @@ public class ResultView extends Activity {
 	
 	
 	private void traceCalc(){
+		String 	strWas = " who was in the movie ",
+				strWith  = " with ";
 		
 		
 		if ( !blInGraph ){
-			tvTrace.setText("No path between "+ strTrace[0] +" and " + strBaseActor + " exists.");
+			tvTrace.setText("No path between "+ SearchView.getTrace()[0] +" and " + SearchView.getBaseActor() + " exists.");
 			return;
 		}
+		tvTrace.setText( SearchView.getTrace()[0] + " was in the movie " + SearchView.getTrace()[1] + strWith );
+		for (int i = 2; i < SearchView.getDistance(); ++i){
+			tvTrace.setText( SearchView.getTrace()[i] + strWas + SearchView.getTrace()[++i] + strWith );	
+		}
+		
 		
 	}
 
