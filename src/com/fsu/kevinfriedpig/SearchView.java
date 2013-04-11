@@ -3,6 +3,7 @@ package com.fsu.kevinfriedpig;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -40,7 +41,7 @@ public class SearchView extends Activity {
 		distance = -1;
 	}
 	
-	public void DistanceCalc () { // function called on button click
+	public void DistanceCalc (View view) { // function called on button click
 		String actor = new String();
 		actor = searchEditText.getText().toString();
 		
@@ -52,25 +53,39 @@ public class SearchView extends Activity {
 		int currNum = 0; // = s2n.get(actor);
 		int cnt = 0;
 		
-		while(currNum != baseActorNum)
-		{
-			trace[cnt] = LoadingView.getN2S().get(currNum);
-			Log.w("MovieDistance", "just stored trace[" + cnt + "] as " + trace[cnt]);
-			++cnt;
-			
-			currNum = LoadingView.getParentVector().get(currNum);
+		if( actor == "Kevin Bacon"){
+			cnt = 0;
+			trace[0] = "Kevin Bacon";
+			openResults(cnt, trace);
 		}
-		if (currNum == baseActorNum)
-			trace[cnt] = LoadingView.getN2S().get(currNum);
-		else
-			Log.w("ELSE", "trace didn't follow correctly");
+		else if(!LoadingView.getS2N().contains(actor)){
+			cnt = -1; // person is not in the database
+			notInDatabase();
+		}
+		else {
+			while(currNum != baseActorNum)
+			{
+				trace[cnt] = LoadingView.getN2S().get(currNum);
+				Log.w("MovieDistance", "just stored trace[" + cnt + "] as " + trace[cnt]);
+				++cnt;
+			
+				currNum = LoadingView.getParentVector().get(currNum);
+			}
+			if (currNum == baseActorNum)
+				trace[cnt] = LoadingView.getN2S().get(currNum);
+			else
+				Log.w("ELSE", "trace didn't follow correctly");
 		
-		Log.w("MovieDistance", "just stored trace[" + cnt + "] as " + trace[cnt]);
-		
-		openResults(cnt, trace);
+			Log.w("MovieDistance", "just stored trace[" + cnt + "] as " + trace[cnt]);
+			Log.w("string2number", "Testing our n2s vector where n = 2 n2s[2] = " + LoadingView.n2sVect.get(2));
+		}
 	}
 	
 	public void openResults (int totDistance, String[] trace) {
+		
+	}
+	
+	public void notInDatabase(){
 		
 	}
 	

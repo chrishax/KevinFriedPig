@@ -268,7 +268,7 @@ public class LoadingView extends Activity {
 				if ( ((current % 2) == 0) && current <= 100)
                     publishProgress(current);
 				n2sVect.add( line2 );
-				Log.w("LoadView", "n2sVect adding " + line2 + "so that n2sVect[" + cnt + "] = " + n2sVect.get(cnt));
+				//Log.w("LoadView", "n2sVect adding " + line2 + "so that n2sVect[" + cnt + "] = " + n2sVect.get(cnt));
 			}
 			
 		} catch (IOException e1) {
