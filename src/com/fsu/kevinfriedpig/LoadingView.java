@@ -103,13 +103,12 @@ public class LoadingView extends Activity {
 	}
 	
 	public static String number2string (int n)
-	{
+	{ 
 		return n2sVect.get(n);
 	}
 	
 	public static int string2number (String s)
 	{
-		Log.w("string2number", "Testing our n2s vector where n = 2 pV[2] = " + parentVect.get(2));
 		Log.w("string2number", "Testing our n2s vector where n = 2 n2s[2] = " + n2sVect.get(2));
 		Log.w("string2number", "Passing in string s = " + s + " for s2n[s] = " + s2n.get(s));
 		return s2n.get(s);
@@ -269,6 +268,7 @@ public class LoadingView extends Activity {
 				if ( ((current % 2) == 0) && current <= 100)
                     publishProgress(current);
 				n2sVect.add( line2 );
+				Log.w("LoadView", "n2sVect adding " + line2 + "so that n2sVect[" + cnt + "] = " + n2sVect.get(cnt));
 			}
 			
 		} catch (IOException e1) {
