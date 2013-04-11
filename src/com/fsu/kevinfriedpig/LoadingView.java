@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 public class LoadingView extends Activity {
 
-	int 		fileCnt 	= 0, 
+	static int 		fileCnt 	= 0, 
 				parentCount = 117876, //# of lines in parentVector.txt
 				n2sCount 	= 117876, //# of lines in n2sFile.txt
 				s2nCount	= 117876; //# of lines in s2nFile.txt
@@ -41,9 +41,9 @@ public class LoadingView extends Activity {
 				n2sBl = false,
 				n2sStartedBl = false;
 	
-	Vector<Integer> parentVect = new Vector<Integer>( parentCount );
-	Vector<String>	n2sVect = new Vector<String>( n2sCount );
-	Hashtable <String, Integer> s2n = new Hashtable <String, Integer>( s2nCount );
+	static Vector<Integer> parentVect = new Vector<Integer>( parentCount );
+	static Vector<String>	n2sVect = new Vector<String>( n2sCount );
+	static Hashtable <String, Integer> s2n = new Hashtable <String, Integer>( s2nCount );
 	
 	
 	@Override
@@ -87,32 +87,35 @@ public class LoadingView extends Activity {
 		
 	}
 	
-	public Hashtable <String, Integer> getS2N ()
+	public static Hashtable <String, Integer> getS2N ()
 	{
 		return s2n;
 	}
 	
-	public Vector<Integer> getParentVector ()
+	public static Vector<Integer> getParentVector ()
 	{
 		return parentVect;
 	}
 	
-	public Vector<String> getN2S ()
+	public static Vector<String> getN2S ()
 	{
 		return n2sVect;
 	}
 	
-	public String number2string (int n)
+	public static String number2string (int n)
 	{
 		return n2sVect.get(n);
 	}
 	
-	public int string2number (String s)
+	public static int string2number (String s)
 	{
+		Log.w("string2number", "Testing our n2s vector where n = 2 pV[2] = " + parentVect.get(2));
+		Log.w("string2number", "Testing our n2s vector where n = 2 n2s[2] = " + n2sVect.get(2));
+		Log.w("string2number", "Passing in string s = " + s + " for s2n[s] = " + s2n.get(s));
 		return s2n.get(s);
 	}
 	
-	public int getParent (int n)
+	public static int getParent (int n)
 	{
 		return parentVect.get(n);
 	}
@@ -412,7 +415,9 @@ public class LoadingView extends Activity {
 		if ( s2nBl && n2sBl && parentBl ){
 			
 			Intent searchIntent = new Intent(getBaseContext(), SearchView.class);
+			Log.w("newView", "before start activity for result");
 	        startActivityForResult(searchIntent, 0); 
+	        Log.w("newView", "after start activity for result");
 		}
 		else
 			Log.w("LoadView", "newView, all 3 files are not loaded yet.");
