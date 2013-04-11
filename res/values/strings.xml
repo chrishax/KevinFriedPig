@@ -14,11 +14,11 @@
     <string name="main_instruct_lbl2">Choose Actor from Drop Down</string>
     <string name="main_search_btn">Search</string>
     <string name="main_calc_btn">Calculate</string>
-    <string name="main_search_hint">Enter a Last Name</string>
+    <string name="main_search_hint">Enter an actor or actress name</string>
     
     
     <!-- Loading View strings -->
-    <string name="load_progress_txt">Loading ...</string>
+    <string name="load_progress_txt">Loading &#8230; </string>
     
     
     <!-- Spash Screen Strings -->

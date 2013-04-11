@@ -18,37 +18,20 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/editTextSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/textView1"
-        android:hint="@string/main_search_hint"
-        android:ems="10" >
+        android:ems="10"
+        android:hint="@string/main_search_hint" >
 
         <requestFocus />
     </EditText>
 
     <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/editText1"
-        android:layout_marginRight="15dp"
-        android:text="@string/main_search_btn"
-        android:background="@drawable/custom_button"
-         />
-
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
-
-    <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonCalculate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -57,6 +40,7 @@
         android:layout_margin="20dp"
         android:text="@string/main_calc_btn" 
         android:background="@drawable/custom_button"
+        android:onClick="DistanceCalc"
         />
         
 </RelativeLayout>
