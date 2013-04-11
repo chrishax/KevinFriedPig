@@ -1,7 +1,5 @@
 package com.fsu.kevinfriedpig;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -119,7 +117,14 @@ public class SearchView extends Activity {
 	public void openResults (int totDistance, String[] trace) {
 		Log.w("openResults", "newView, entered successfully");
 		
-			
+			if(distance != totDistance){
+				Log.w("openResults", "Contradiction of distance and cnt");
+				distance = totDistance;
+			}
+			if(distance > 20){
+				Log.w("openResults", "distance < 20, ERROR");
+				distance = 20;
+			}
 			Intent searchIntent = new Intent(getBaseContext(), ResultView.class);
 			Log.w("newView", "before start activity for result");
 	        startActivityForResult(searchIntent, 0); 
@@ -144,6 +149,10 @@ public class SearchView extends Activity {
 	
 	static public int getDistance(){
 		return distance;
+	}
+
+	static public String getBaseActor(){
+		return baseActor;
 	}
 	
 	
