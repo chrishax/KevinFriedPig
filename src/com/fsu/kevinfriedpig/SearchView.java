@@ -71,7 +71,7 @@ public class SearchView extends Activity {
 		
 		if((LoadingView.getS2N().get(actor)) == null){ // person isn't in the database at all
 			Log.w("Movie Distance", "actor not in database");
-			distance = -1; // person is not in the database
+			distance = -4; // person is not in the database
 			notInDatabase(actor);
 			Reset();
 			return;

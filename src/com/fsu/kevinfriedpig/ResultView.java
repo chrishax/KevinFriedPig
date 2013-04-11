@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ public class ResultView extends Activity {
 	int 		intEaster,
 				intResult;
 	Boolean 	blInGraph;
+	ImageButton baconImage;
 	
 	@Override
 	   protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class ResultView extends Activity {
 	      
 	      tvBaconNum = (TextView)findViewById(R.id.tvBaconNum);
 	      tvTrace = (TextView)findViewById(R.id.tvTrace);
+	      baconImage = (ImageButton)findViewById(R.id.imbKfp);
 	      intEaster = 0;
 	      intResult = 0;
 	      blInGraph = false;
@@ -74,6 +77,7 @@ public class ResultView extends Activity {
 		blInGraph = false;
 		tvBaconNum.setText("");
 		tvTrace.setText("");
+		baconImage.setImageResource(R.drawable.baconr);
 	}
 	
 	
@@ -88,14 +92,18 @@ public class ResultView extends Activity {
 		Log.w("ResultView","baconCalc() entered successfully");
 		int cnt = SearchView.getBaconNum();
 		Log.w("ResultView","baconCalc() after getbaconNum");
+		
+		setImageButton(cnt);
+		
 		if ( cnt >= 0 ){
-			tvBaconNum.setText( Integer.toString(cnt) );
+			//tvBaconNum.setText( Integer.toString(cnt) );
 			blInGraph = true;
 		}		
 		else{
 			switch(cnt){
 			case -1:
 				tvBaconNum.setText("Actor Has No Bacon Number");
+				baconImage.setImageResource(R.drawable.bacon_infinity);
 				break;
 			case -2:
 				Log.w("ResultView","baconCalc, return value of SearchView.getBaconNum() = -2 ");
@@ -136,6 +144,54 @@ public class ResultView extends Activity {
 		strTrace = strTrace + SearchView.getBaseActor() + "."			;
 		tvTrace.setText(strTrace);
 		Log.w("ResultView","traceCalc() exit successfully");
+		
+	}
+	
+	private void setImageButton(int i){
+		switch(i){
+		case 0:
+			baconImage.setImageResource(R.drawable.bacon0);
+			break;
+		case 1:
+			baconImage.setImageResource(R.drawable.bacon1);
+			break;
+		case 2:
+			baconImage.setImageResource(R.drawable.bacon2);
+			break;
+		case 3:
+			baconImage.setImageResource(R.drawable.bacon3);
+			break;
+		case 4:
+			baconImage.setImageResource(R.drawable.bacon4);
+			break;
+		case 5:
+			baconImage.setImageResource(R.drawable.bacon5);
+			tvTrace.setTextSize(12);
+			break;
+		case 6:
+			baconImage.setImageResource(R.drawable.bacon6);
+			tvTrace.setTextSize(12);
+			break;
+		case 7:
+			baconImage.setImageResource(R.drawable.bacon7);
+			tvTrace.setTextSize(12);
+			break;
+		case 8:
+			baconImage.setImageResource(R.drawable.bacon8);
+			tvTrace.setTextSize(12);
+			break;
+		case 9:
+			baconImage.setImageResource(R.drawable.bacon9);
+			tvTrace.setTextSize(12);
+			break;
+		case 10:
+			baconImage.setImageResource(R.drawable.bacon10);
+			tvTrace.setTextSize(12);
+			break;
+		default:
+			baconImage.setImageResource(R.drawable.bacon_ahh);
+			
+		}
 		
 	}
 
