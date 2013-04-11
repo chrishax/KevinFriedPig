@@ -46,7 +46,6 @@ public class LoadingView extends Activity {
 	Hashtable <String, Integer> s2n = new Hashtable <String, Integer>( s2nCount );
 	
 	
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -86,6 +85,36 @@ public class LoadingView extends Activity {
 			}
 			Log.w("LoadingView","loadFiles, after thread calls");
 		
+	}
+	
+	public Hashtable <String, Integer> getS2N ()
+	{
+		return s2n;
+	}
+	
+	public Vector<Integer> getParentVector ()
+	{
+		return parentVect;
+	}
+	
+	public Vector<String> getN2S ()
+	{
+		return n2sVect;
+	}
+	
+	public String number2string (int n)
+	{
+		return n2sVect.get(n);
+	}
+	
+	public int string2number (String s)
+	{
+		return s2n.get(s);
+	}
+	
+	public int getParent (int n)
+	{
+		return parentVect.get(n);
 	}
 	
 	/////////////////////////////////////////////////////////////////
