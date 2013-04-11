@@ -55,30 +55,32 @@ public class SymGraph {
 	    	//Log.w("symgraph", "symgraph( ), exit constructor");
 	    }
 
-	    SymGraph ( int n )
-	    // constructor that initializes the size of the graph and underlying conversions
-		{
-	    	//Log.w("symgraph", "symgraph( int n ), enter constructor");
-	    	g_.SetVrtxSize(n);
-	    	//s2n_ -> n
-	    	n2s_.setSize(n);
-	    	lastPushed = 0;
-	    	//Log.w("symgraph", "symgraph( int n ), exit constructor");
-		}
+//	    SymGraph ( int n )
+//	    // constructor that initializes the size of the graph and underlying conversions
+//		{
+//	    	//Log.w("symgraph", "symgraph( int n ), enter constructor");
+//	    	g_.SetVrtxSize(n);
+//	    	//s2n_ -> n
+//	    	n2s_.setSize(n);
+//	    	lastPushed = 0;
+//	    	//Log.w("symgraph", "symgraph( int n ), exit constructor");
+//		}
 	  
 	    void SetVrtxSize  (int n)
 	    // Sets the vertex size of the graph
 	    {//Log.w("symgraph", "setvrtxsize, before alu.set");
 	    	g_.SetVrtxSize( n );
+	    	n2s_.setSize(n);
+	    	s2n_ = new Hashtable<String, Integer>(n);
 	    	//Log.w("symgraph", "setvrtxsize, before alu.set");
 	    }
 	  
 	    void AddEdge (String from, String to)
 	    // adds an edge between to vertecies of the graph
 	    {
-	    	//Log.w("symgraph", "addedge, first line passing in " + from + " and " + to  );
+	    	Log.w("symgraph", "addedge, first line passing in " + from + " and " + to  );
 	    	g_.AddEdge(s2n_.get(from), s2n_.get(to));
-	    	//Log.w("symgraph", "addedge, last line"  );
+	    	Log.w("symgraph", "addedge, last line"  );
 	    }
 	  
 	    int VrtxSize () 

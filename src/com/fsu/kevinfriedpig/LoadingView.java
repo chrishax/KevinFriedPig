@@ -62,9 +62,12 @@ public class LoadingView extends Activity {
 //		boolean actorExistsInDataBase = false;
 //		boolean baseActorExistsInDataBase = false;
 //		boolean connectedToBaseActor = false;
-		Context context;
-		int 	vertexSize = 207200,
+		
+		int 	vertexSize = 117876,
+				current = 0;
+		float	movieCount = 4188,
 				counter = 0;
+			
 		
 		
 		/*
@@ -140,12 +143,16 @@ public class LoadingView extends Activity {
 			      
 ////Log.w("doInBackground","before if !gotmovie");
 			      if ( !gotMovie )
-			      {//if we havent gotten a movie yet get movie title
+			      {
+			    	  ++counter;
+			    	  //if we havent gotten a movie yet get movie title
 			        for( int j = startIndex; j < index; ++j )
 			          movie += line.charAt(j);
 			        
 			     // publish updates at 5% intervals
-			        int current = ++counter / vertexSize;   
+			        
+			        float cur = (counter / movieCount); 
+			        current = (int) (cur * 100);
 			        if ( ((current % 2) == 0) && current <= 100)
 				    	   publishProgress(current);
 				       
@@ -161,7 +168,8 @@ public class LoadingView extends Activity {
 			      else
 			      {//else get actor name
 			    	  //Log.w("doInBackground","first line in reading actor");
-			        String 	lastName = "";
+			    	  
+			    	  String 	lastName = "";
 			        Boolean gotLast = false,
 			        		dumpEnd = false;
 			        
@@ -236,15 +244,10 @@ public class LoadingView extends Activity {
 	        @Override  
 	        protected void onPostExecute(Integer result)  
 	        {  
-	        	Intent searchIntent = new Intent(context, SearchView.class);
-	            startActivityForResult(searchIntent, 0);  
+	        	newView();
+	            
 	        }  
 	      
-		
-		
-		
-		
-		
 		
 		
 	
@@ -304,7 +307,14 @@ public class LoadingView extends Activity {
 	}
 
 
-
+	private void newView(){
+		Log.w("onPostExecute", "OnPostExecute reached");
+    	Intent searchIntent = new Intent(getBaseContext(), SearchView.class);
+        Log.w("onPostExecute", "before startActivity");
+    	startActivityForResult(searchIntent, 0);  
+    	Log.w("onPostExecute", "finished");
+	}
+	
 	
 
 	public int distance( String actor ){

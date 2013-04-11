@@ -51,6 +51,7 @@ public class ALUGraph {
 	{
 		LinkedList<Integer> froml = al_.get(from);
 		LinkedList<Integer> tol = al_.get(to);
+		
 		if (froml == null) froml = new LinkedList<Integer>();
 		if (tol == null) tol = new LinkedList<Integer>();
 		

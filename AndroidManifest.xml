@@ -12,10 +12,13 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" 
+        android:largeHeap="true">
         <activity
             android:name="com.fsu.kevinfriedpig.SplashScreenView"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,14 +28,17 @@
         <activity 
             android:name=".LoadingView" 
             android:label="@string/loading_view_title"
+            android:screenOrientation="portrait"
             ></activity>
         <activity 
             android:name=".SearchView" 
             android:label="@string/search_view_title"
+            android:screenOrientation="portrait"
             ></activity>
         <activity 
             android:name=".ResultView" 
             android:label="@string/result_view_title"
+            android:screenOrientation="portrait"
             ></activity>
     </application>
 
