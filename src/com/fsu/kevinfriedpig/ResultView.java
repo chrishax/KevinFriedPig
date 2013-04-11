@@ -22,6 +22,7 @@ public class ResultView extends Activity {
 		
 		  Log.w("ResultView", "onCreate entered");
 	      super.onCreate(savedInstanceState);
+	      setContentView(R.layout.result_view);
 	      
 	      tvBaconNum = (TextView)findViewById(R.id.tvBaconNum);
 	      tvTrace = (TextView)findViewById(R.id.tvTrace);

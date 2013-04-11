@@ -1,7 +1,5 @@
 package com.fsu.kevinfriedpig;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -25,22 +23,22 @@ public class SearchView extends Activity {
 	Context context = this;
 	
 	@Override
-	   protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
+		Log.w("onCreate", "SearchView onCreate entered");
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.search_view);
+		Log.w("SearchView", "oncreate, after setcontentview");
 		
-		  Log.w("onCreate", "SearchView onCreate entered");
-	      super.onCreate(savedInstanceState);
-	 
-	      this.requestWindowFeature(Window.FEATURE_NO_TITLE);    // Removes title bar
-	      this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);    // Removes notification bar
-	 
-	      searchEditText = (EditText)findViewById(R.id.editTextSearch);
-	      calculateButton = (Button)findViewById(R.id.buttonCalculate);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
+				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
+		
+		Log.w("SearchView", "oncreate, after window flags");
+		searchEditText = (EditText)findViewById(R.id.editTextSearch);
+		calculateButton = (Button)findViewById(R.id.buttonCalculate);
+		  
+		Log.w("onCreate", "End of onCreate in SearchView");
 	      
-	      setContentView(R.layout.search_view);
-	      
-	      Log.w("onCreate", "End of onCreate in SearchView");
-	      
-	   }
+	}
 	
 	public void Reset () { // used to reset distance to -1 and reset other variables
 		distance = -1;
@@ -51,7 +49,9 @@ public class SearchView extends Activity {
 		String actor = new String();
 		Log.w("DistanceCalc", "new String processed");
 		// This is where programs come to die
-		Log.w("DistanceCalc", "searchEditText = " + (searchEditText.getText().toString()));
+		String temp = (searchEditText.getText().toString());
+		Log.w("DistanceCalc","after tostring");
+		Log.w("DistanceCalc", "searchEditText = " + temp);
 		
 		if( searchEditText.getText().toString().trim().length() == 0 ){
 			Log.w("DistanceCalc", "toast should show == nothing or 1 space");
