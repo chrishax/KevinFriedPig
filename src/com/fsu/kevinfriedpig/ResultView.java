@@ -13,9 +13,11 @@ public class ResultView extends Activity {
 
 	TextView	tvBaconNum,
 				tvTrace;
+	String		strBaseActor = "Kevin Bacon";
 	String[]	strTrace;
 	int 		intEaster,
 				intResult;
+	Boolean 	blInGraph;
 	
 	@Override
 	   protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +30,15 @@ public class ResultView extends Activity {
 	      tvTrace = (TextView)findViewById(R.id.tvTrace);
 	      intEaster = 0;
 	      intResult = 0;
+	      blInGraph = false;
 	      
 	      showResults();
 	}
 	
 	
-	
+	/*
+	 * Method implements easter egg - can you find it?
+	 */
 	public void kevinClick(View view){
 		++intEaster;
 		if( intEaster > 2 ){
@@ -44,22 +49,68 @@ public class ResultView extends Activity {
 		}
 	}
 	
+	
+	
+	/*
+	 * Main method of thread that pulls results
+	 * manips the results
+	 * and updates UI with results
+	 */
 	private void showResults(){
-		
 		resetView();
-		
-		intResult = SearchView.getBaconNum();
-		
-		
-		//TODO manip results for display
-		//TODO display results
-		
+		baconCalc();
+		traceCalc();
 	}
 	
+	
+	/*
+	 * resets the form
+	 */
 	private void resetView(){
 		tvBaconNum.setText("");
 		tvTrace.setText("");
 	}
 	
+	
+
+/*	
+ *  if cnt ==  -1 // Actor exists in graph, but does not connect to base actor
+ *	if cnt == -2 // unexpected error
+ *	if cnt == 0 // baseActor is the option (SearchView.baseActor)
+ *	if cnt > 0 // baconnumber = cnt/2
+*/
+	private void baconCalc(){
+		
+		int cnt = SearchView.getBaconNum();
+		
+		if ( cnt >= 0 ){
+			tvBaconNum.setText(cnt);
+			blInGraph = true;
+		}
+		else{
+			switch(cnt){
+			case -1:
+				tvBaconNum.setText("Actor Has No Bacon Number");
+				break;
+			case -2:
+				Log.w("ResultView","baconCalc, return value of SearchView.getBaconNum() = -2 ");
+				break;
+			default:
+				Log.w("ResultView","baconCalc, return value of SearchView.getBaconNum() < -2.  This should never happen!");
+				break;
+			}//switch
+		}//else
+	}//baconCalc()
+	
+	
+	private void traceCalc(){
+		
+		
+		if ( !blInGraph ){
+			tvTrace.setText("No path between "+ strTrace[0] +" and " + strBaseActor + " exists.");
+			return;
+		}
+		
+	}
 
 }
