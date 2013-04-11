@@ -45,6 +45,7 @@ public class LoadingView extends Activity {
 				s2nStartedBl = false,
 				n2sBl = false,
 				n2sStartedBl = false;
+	static Boolean		closeView = false;
 
 	static Vector<Integer> parentVect = new Vector<Integer>( parentCount );
 	static Vector<String>	n2sVect = new Vector<String>( n2sCount );
@@ -66,6 +67,7 @@ public class LoadingView extends Activity {
 		pbProgress2=(ProgressBar)findViewById(R.id.pbProgress2);
 		pbProgress3=(ProgressBar)findViewById(R.id.pbProgress3);
 		amInput = this.getAssets();
+		checkForClose();
 		Log.w("onCreate","before loadFiles");
 		loadFiles();
 		Log.w("onCreate","after loadFiles");		
@@ -436,6 +438,15 @@ public class LoadingView extends Activity {
 		}
 		else
 			Log.w("LoadView", "newView, all 3 files are not loaded yet.");
+	}
+	
+	static void prepareToClose(){
+		closeView = true;
+	}
+	
+	void checkForClose(){
+		if(closeView)
+			LoadingView.super.finish();
 	}
 
 
