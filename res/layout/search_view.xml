@@ -28,9 +28,11 @@
         android:hint="@string/main_search_hint"
         android:inputType="textCapWords"
         android:minLines="1"
-        android:maxLines="1" 
+        android:maxLines="1"
+        android:layout_marginLeft="20dp" 
+        android:layout_marginRight="20dp"
         android:textColor="@color/black"
-        android:background="@color/white"
+        android:background="@drawable/shine_et"
         >
 
        <requestFocus />
