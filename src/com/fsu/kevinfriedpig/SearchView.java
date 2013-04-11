@@ -1,5 +1,6 @@
 package com.fsu.kevinfriedpig;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -7,7 +8,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class SearchView extends LoadingView {
+public class SearchView extends Activity {
 
 	EditText searchEditText;
 	Button calculateButton;
@@ -15,7 +16,7 @@ public class SearchView extends LoadingView {
 	int distance = -1;
 	String [] trace = new String [20]; // evens should be actors and odds movies
 	String baseActor = "Kevin Bacon";
-	int baseActorNum = string2number(baseActor);
+	int baseActorNum;// = string2number(baseActor);
 	
 	@Override
 	   protected void onCreate(Bundle savedInstanceState) {
