@@ -366,7 +366,7 @@ public class LoadingView extends Activity {
 			while( (line = reader3.readLine()) != null ){
 				
 				//publish update to UI thread for progress
-				++cnt;
+				
 				float count = (float)cnt;
 				float cur = ( count / fileSize );
 				int current = (int)( cur * 100 );
@@ -375,6 +375,7 @@ public class LoadingView extends Activity {
 				
 				//store string and int 
 				 s2n.put( line, cnt );
+				 ++cnt;
 			}
 
 		} catch (IOException e1) {

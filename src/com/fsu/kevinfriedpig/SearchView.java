@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -116,6 +117,13 @@ public class SearchView extends Activity {
 	}
 	
 	public void openResults (int totDistance, String[] trace) {
+		Log.w("openResults", "newView, entered successfully");
+		
+			
+			Intent searchIntent = new Intent(getBaseContext(), ResultView.class);
+			Log.w("newView", "before start activity for result");
+	        startActivityForResult(searchIntent, 0); 
+	        Log.w("newView", "after start activity for result");
 		
 	}
 	
