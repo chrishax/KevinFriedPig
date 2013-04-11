@@ -31,6 +31,7 @@ public class ResultView extends Activity {
 	      intResult = 0;
 	      blInGraph = false;
 	      
+	      Log.w("ResultView","onCreate() before ShowResults() call");
 	      showResults();
 	}
 	
@@ -56,9 +57,13 @@ public class ResultView extends Activity {
 	 * and updates UI with results
 	 */
 	private void showResults(){
+		Log.w("ResultView","showResults() entered successfully");
 		resetView();
+		Log.w("ResultView","showResults() after restView");
 		baconCalc();
+		Log.w("ResultView","showResults()  after baconCalc");
 		traceCalc();
+		Log.w("ResultView","showResults() after traceCalc");
 	}
 	
 	
@@ -79,13 +84,13 @@ public class ResultView extends Activity {
  *	if cnt > 0 // baconnumber = cnt/2
 */
 	private void baconCalc(){
-		
+		Log.w("ResultView","baconCalc() entered successfully");
 		int cnt = SearchView.getBaconNum();
-		
+		Log.w("ResultView","baconCalc() after getbaconNum");
 		if ( cnt >= 0 ){
-			tvBaconNum.setText(cnt);
+			tvBaconNum.setText( Integer.toString(cnt) );
 			blInGraph = true;
-		}
+		}		
 		else{
 			switch(cnt){
 			case -1:
@@ -99,14 +104,16 @@ public class ResultView extends Activity {
 				break;
 			}//switch
 		}//else
+		Log.w("ResultView","baconCalc() exit successfully");
 	}//baconCalc()
 	
 	
 	private void traceCalc(){
+		Log.w("ResultView","traceCalc() entered successfully");
 		String 	strWas = " who was in the movie ",
 				strWith  = " with ";
 		
-		
+		Log.w("ResultView","traceCalc() before if");
 		if ( !blInGraph ){
 			tvTrace.setText("No path between "+ SearchView.getTrace()[0] +" and " + SearchView.getBaseActor() + " exists.");
 			return;
@@ -115,7 +122,7 @@ public class ResultView extends Activity {
 		for (int i = 2; i < SearchView.getDistance(); ++i){
 			tvTrace.setText( SearchView.getTrace()[i] + strWas + SearchView.getTrace()[++i] + strWith );	
 		}
-		
+		Log.w("ResultView","traceCalc() exit successfully");
 		
 	}
 
