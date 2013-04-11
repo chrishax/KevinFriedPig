@@ -48,7 +48,7 @@ public class ResultView extends Activity {
 		
 		resetView();
 		
-		intResult = SearchView.getBaconNum();
+		//intResult = SearchView.getBaconNum();
 		
 		
 		//TODO manip results for display
