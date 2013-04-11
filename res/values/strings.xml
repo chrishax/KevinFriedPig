@@ -6,22 +6,30 @@
     <string name="menu_settings">Settings</string>
     <string name="loading_view_title">Please Wait</string>
     <string name="search_view_title">Let\'s Play</string>
-    <string name="result_view_title">Results</string>
     
+    <!-- result view strings -->
+    <string name="result_view_title">Results</string>
+    <string name="result_view_blank">  </string>
+    <string name="result_view_contdesc">Downloaded and altered from Google Images</string>
 
     <!-- Main View Strings -->
-    <string name="main_instruct_lbl1">Search by Last Name</string>
+    <string name="main_instruct_lbl1">Search by Actor Name</string>
     <string name="main_instruct_lbl2">Choose Actor from Drop Down</string>
     <string name="main_search_btn">Search</string>
     <string name="main_calc_btn">Calculate</string>
-    <string name="main_search_hint">Enter a Last Name</string>
+    <string name="main_search_hint">Enter an actor or actress name</string>
+    <string name="main_instructions">This will search the database for the Bacon Number of the given actor or actress. Please enter the name with proper capilization.</string>
     
     
     <!-- Loading View strings -->
-    <string name="load_progress_txt">Loading ...</string>
+    <string name="load_progress_txt">Loading &#8230; </string>
+    <string name="load_quote">\"I joke that my epitaph will be, \'No Oscars, but at least he had a game named after him.\'\" \n- Kevin Bacon </string>
     
     
     <!-- Spash Screen Strings -->
     <string name="splash_png1_info">Downloaded and altered from Google Images</string>
     <string name="splash_png2_info">Created from editing stock FSU logo photo by: Christian Smith</string>
+    
+    
+    
 </resources>

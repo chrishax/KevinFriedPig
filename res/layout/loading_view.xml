@@ -5,32 +5,78 @@
     android:background="@drawable/background_gradient"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
+    
+
+    <TextView
+        android:id="@+id/tvProgress1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pbProgress1"
+        android:layout_alignParentLeft="true"
+        android:text="@string/load_progress_txt"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/gold2" />
+    
+    <ProgressBar
+        android:id="@+id/pbProgress1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvProgress2"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="37dp" />
+
+    <TextView
+        android:id="@+id/tvProgress2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pbProgress2"
+        android:layout_alignParentLeft="true"
+        android:text="@string/load_progress_txt"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/gold2" />
+
+
+    <ProgressBar
+        android:id="@+id/pbProgress2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvProgress3"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="10dp"
+         />
+
+    <TextView
+        android:id="@+id/tvProgress3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pbProgress3"
+        android:layout_alignParentLeft="true"
+        android:text="@string/load_progress_txt"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/gold2" />
+    
+    <ProgressBar
+        android:id="@+id/pbProgress3"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
         android:layout_margin="10dp"
-        android:background="@drawable/custom_button"
-        android:orientation="vertical" >
-
-        <ProgressBar
-            android:id="@+id/pb_progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp" />
-    </LinearLayout>
+        android:layout_marginBottom="15dp"
+         />
 
     <TextView
-        android:id="@+id/tv_progress"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout1"
-        android:layout_alignLeft="@+id/linearLayout1"
-        android:layout_alignRight="@+id/linearLayout1"
-        android:text="@string/load_progress_txt"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/load_quote"
+        android:gravity="center"
         android:textColor="@color/gold2"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
