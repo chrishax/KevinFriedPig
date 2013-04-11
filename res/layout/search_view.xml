@@ -28,7 +28,10 @@
         android:hint="@string/main_search_hint"
         android:inputType="textCapWords"
         android:minLines="1"
-        android:maxLines="1" >
+        android:maxLines="1" 
+        android:textColor="@color/black"
+        android:background="@color/white"
+        >
 
        <requestFocus />
     </EditText>
