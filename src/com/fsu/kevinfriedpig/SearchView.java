@@ -18,8 +18,8 @@ public class SearchView extends Activity {
 	
 	static int distance = -1;
 	static String [] trace = new String [20]; // evens should be actors and odds movies
-	static String baseActor = "Kevin Bacon";
-	static int baseActorNum = LoadingView.string2number(baseActor);
+	static final String baseActor = "Kevin Bacon";
+	static final int baseActorNum = LoadingView.string2number(baseActor);
 	Context context = this;
 	
 	@Override
@@ -125,6 +125,7 @@ public class SearchView extends Activity {
 				Log.w("openResults", "distance < 20, ERROR");
 				distance = 20;
 			}
+			searchEditText.setText("");
 			Intent searchIntent = new Intent(getBaseContext(), ResultView.class);
 			Log.w("newView", "before start activity for result");
 	        startActivityForResult(searchIntent, 0); 
@@ -134,6 +135,7 @@ public class SearchView extends Activity {
 	
 	public void notInDatabase(String actor){
 		Toast.makeText(context, actor + " is not in the database. Please try again.", Toast.LENGTH_SHORT).show();
+		Reset();
 	}
 	
 	static public int getBaconNum(){
