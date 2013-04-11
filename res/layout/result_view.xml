@@ -21,7 +21,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/imbKfp"
-        android:text="Large Text"
+        android:text="@string/result_view_blank"
+        android:textColor="@color/gold3"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -33,7 +34,8 @@
         android:layout_alignTop="@+id/imbKfp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="Large Text"
+        android:textColor="@color/gold3"
+        android:text="@string/result_view_blank"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
 
