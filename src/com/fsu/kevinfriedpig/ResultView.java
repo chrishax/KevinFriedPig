@@ -12,8 +12,7 @@ import android.widget.Toast;
 
 public class ResultView extends Activity {
 
-	TextView	tvBaconNum,
-				tvTrace;
+	TextView	tvTrace;
 	String		strTrace;
 	int 		intEaster,
 				intResult;
@@ -27,7 +26,6 @@ public class ResultView extends Activity {
 	      super.onCreate(savedInstanceState);
 	      setContentView(R.layout.result_view);
 	      
-	      tvBaconNum = (TextView)findViewById(R.id.tvBaconNum);
 	      tvTrace = (TextView)findViewById(R.id.tvTrace);
 	      baconImage = (ImageButton)findViewById(R.id.imbKfp);
 	      intEaster = 0;
@@ -75,7 +73,6 @@ public class ResultView extends Activity {
 	 */
 	private void resetView(){
 		blInGraph = false;
-		tvBaconNum.setText("");
 		tvTrace.setText("");
 		baconImage.setImageResource(R.drawable.baconr);
 	}
@@ -102,7 +99,6 @@ public class ResultView extends Activity {
 		else{
 			switch(cnt){
 			case -1:
-				tvBaconNum.setText("Actor Has No Bacon Number");
 				baconImage.setImageResource(R.drawable.bacon_infinity);
 				break;
 			case -2:

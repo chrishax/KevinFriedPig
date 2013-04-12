@@ -52,9 +52,9 @@ public class SearchView extends Activity {
 	        .setPositiveButton(android.R.string.yes, new OnClickListener() {
 
 	            public void onClick(DialogInterface arg0, int arg1) {
-	            	LoadingView.prepareToClose();
-	            	SearchView.super.finish();
-	                //android.os.Process.killProcess(android.os.Process.myPid());
+	            	Intent mIntent = new Intent();
+	                setResult(RESULT_OK, mIntent);
+	                SearchView.super.finish();
 	            }
 	        }).create().show();
 	}

@@ -31,19 +31,4 @@
         android:textColor="@color/gold3"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/tvBaconNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/imbKfp"
-        android:layout_marginTop="25dp"
-        android:gravity="center"
-        android:text="@string/result_view_blank"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/garnett1"
-        android:textSize="45sp"
-        android:textStyle="bold" />
-
 </RelativeLayout>

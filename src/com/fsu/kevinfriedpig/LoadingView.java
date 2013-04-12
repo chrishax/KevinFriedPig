@@ -46,6 +46,9 @@ public class LoadingView extends Activity {
 				n2sBl = false,
 				n2sStartedBl = false;
 	static Boolean		closeView = false;
+	ParentLoad	pl;
+	s2nLoad		s2nl;
+	n2sLoad		n2sl;
 
 	static Vector<Integer> parentVect = new Vector<Integer>( parentCount );
 	static Vector<String>	n2sVect = new Vector<String>( n2sCount );
@@ -67,7 +70,12 @@ public class LoadingView extends Activity {
 		pbProgress2=(ProgressBar)findViewById(R.id.pbProgress2);
 		pbProgress3=(ProgressBar)findViewById(R.id.pbProgress3);
 		amInput = this.getAssets();
-		checkForClose();
+//		checkForClose();
+		
+		pl = new ParentLoad();
+		s2nl = new s2nLoad();
+		n2sl = new n2sLoad();
+				
 		Log.w("onCreate","before loadFiles");
 		loadFiles();
 		Log.w("onCreate","after loadFiles");		
@@ -87,18 +95,9 @@ public class LoadingView extends Activity {
 	private void loadFiles(){
 
 			Log.w("LoadingView","loadFiles, before thread calls");
-			if ( !parentStartedBl ){
-				new ParentLoad().execute();
-				parentStartedBl = true;
-			}
-			if ( !s2nStartedBl ){
-				new s2nLoad().execute();
-				s2nStartedBl = true;
-			}
-			if ( !n2sStartedBl ){
-				new n2sLoad().execute();
-				n2sStartedBl = true;
-			}
+			pl.execute();
+			s2nl.execute();
+			n2sl.execute();
 			Log.w("LoadingView","loadFiles, after thread calls");
 
 	}
@@ -182,9 +181,11 @@ public class LoadingView extends Activity {
 				float count = (float)cnt;
 				float cur = ( count / fileSize );
 				int current = (int)( cur * 100 );
-				if ( ((current % 2) == 0) && current <= 100)
-                    publishProgress(current);
-
+				if ( ((current % 2) == 0) && current <= 100){
+					if ( pl.isCancelled() )
+						return null;
+				    publishProgress(current);
+				}
 				int value = Integer.parseInt(line);
 				parentVect.add( value );
 			}
@@ -281,8 +282,11 @@ public class LoadingView extends Activity {
 				float count = (float)cnt;
 				float cur = ( count / fileSize );
 				int current = (int)( cur * 100 );
-				if ( ((current % 2) == 0) && current <= 100)
+				if ( ((current % 2) == 0) && current <= 100){
+					if ( n2sl.isCancelled() )
+						return null;
                     publishProgress(current);
+				}
 				n2sVect.add( line2 );
 				//Log.w("LoadView", "n2sVect adding " + line2 + "so that n2sVect[" + cnt + "] = " + n2sVect.get(cnt));
 			}
@@ -378,8 +382,11 @@ public class LoadingView extends Activity {
 				float count = (float)cnt;
 				float cur = ( count / fileSize );
 				int current = (int)( cur * 100 );
-				if ( ((current % 2) == 0) && current <= 100)
-                    publishProgress(current);
+				if ( ((current % 2) == 0) && current <= 100){
+					if ( s2nl.isCancelled() )
+						return null;
+					publishProgress(current);
+				}
 
 				//store string and int 
 				 s2n.put( line, cnt );
@@ -426,6 +433,11 @@ public class LoadingView extends Activity {
 	}// private class s2nLoad extends AsyncTask< Void, Integer, Void >		
 
 
+	
+	/*
+	 * test for finished asynctask file loading
+	 * if all loaded open searchView
+	 */
 	private void newView(){
 
 		Log.w("loadView", "newView, entered successfully");
@@ -433,21 +445,43 @@ public class LoadingView extends Activity {
 
 			Intent searchIntent = new Intent(getBaseContext(), SearchView.class);
 			Log.w("newView", "before start activity for result");
-	        startActivityForResult(searchIntent, 0); 
+	        startActivityForResult(searchIntent, 1); 
 	        Log.w("newView", "after start activity for result");
 		}
 		else
 			Log.w("LoadView", "newView, all 3 files are not loaded yet.");
 	}
 	
-	static void prepareToClose(){
-		closeView = true;
-	}
-	
-	void checkForClose(){
-		if(closeView)
-			LoadingView.super.finish();
+//	static void prepareToClose(){
+//		closeView = true;
+//	}
+//	
+//	void checkForClose(){
+//		if(closeView)
+//			LoadingView.super.finish();
+//	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK){
+			pl.cancel(true);
+			s2nl.cancel(true);
+			n2sl.cancel(true);
+
+			super.finish();
+		}
+			
 	}
 
+	@Override
+	protected void onDestroy() {
+		pl.cancel(true);
+		s2nl.cancel(true);
+		n2sl.cancel(true);
+		super.onDestroy();
+	}
+	
 
 }
