@@ -25,8 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/tvProgress2"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="37dp" />
+        android:layout_marginRight="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginBottom="35dp" />
 
     <TextView
         android:id="@+id/tvProgress2"
@@ -47,7 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/tvProgress3"
         android:layout_alignParentLeft="true"
-        android:layout_margin="10dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginBottom="35dp"
          />
 
     <TextView
@@ -68,8 +71,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_margin="10dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginBottom="35dp"
+        
          />
 
     <TextView

@@ -23,13 +23,14 @@
         android:id="@+id/imbKfp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvTrace"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:layout_marginTop="84dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/result_view_contdesc"
         android:onClick="kevinClick"
-        android:src="@drawable/baconr" />
+        android:src="@drawable/bacon0" />
 
 </RelativeLayout>
