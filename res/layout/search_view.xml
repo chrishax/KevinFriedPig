@@ -60,5 +60,15 @@
         android:textColor="@color/gold2"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/small_tree_demo"
+        android:contentDescription="@string/main_graph_desc" />
         
 </RelativeLayout>
