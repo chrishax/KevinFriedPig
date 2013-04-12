@@ -19,7 +19,7 @@
     <string name="main_calc_btn">Calculate</string>
     <string name="main_search_hint">Enter an actor or actress name</string>
     <string name="main_instructions">This will search the database for the Bacon Number of the given actor or actress. Please enter the name with proper capilization.</string>
-    
+    <string name="main_graph_desc">Example graph of the database</string>
     
     <!-- Loading View strings -->
     <string name="load_progress_txt">Loading &#8230; </string>
