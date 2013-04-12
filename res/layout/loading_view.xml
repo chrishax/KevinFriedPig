@@ -79,6 +79,15 @@
         android:gravity="center"
         android:textColor="@color/gold2"
         android:layout_marginTop="12dp"
-        android:textSize="28sp" />
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvProgress1"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/main_graph_desc"
+        android:src="@drawable/small_tree_demo" />
 
 </RelativeLayout>
