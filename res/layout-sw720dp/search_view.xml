@@ -14,8 +14,7 @@
         android:layout_margin="15dp"
         android:text="@string/main_instruct_lbl1"
         android:textColor="@color/gold2"
-        
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="40sp" />
 
     <EditText
         android:id="@+id/editTextSearch"
@@ -33,6 +32,7 @@
         android:layout_marginRight="20dp"
         android:textColor="@color/black"
         android:background="@drawable/shine_et"
+        android:textSize="30sp"
         >
 
        <requestFocus />
@@ -47,7 +47,9 @@
         android:layout_margin="20dp"
         android:background="@drawable/custom_button"
         android:onClick="DistanceCalc"
-        android:text="@string/main_calc_btn" />
+        android:text="@string/main_calc_btn"
+        android:textSize="40sp"
+       	 />
 
     <TextView
         android:id="@+id/textView2"
@@ -59,6 +61,15 @@
         android:text="@string/main_instructions"
         android:textColor="@color/gold2"
         android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textSize="40sp" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/fsu_demo_graph"
+        android:contentDescription="@string/main_graph_desc" />
         
 </RelativeLayout>
