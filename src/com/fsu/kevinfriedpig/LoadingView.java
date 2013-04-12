@@ -470,7 +470,9 @@ public class LoadingView extends Activity {
 			s2nl.cancel(true);
 			n2sl.cancel(true);
 
-			super.finish();
+            android.os.Process.killProcess(android.os.Process.myPid());
+
+			//super.finish();
 		}
 			
 	}
